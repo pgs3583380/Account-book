@@ -6,10 +6,10 @@
         <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
         <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
         <result column="level" property="level" jdbcType="INTEGER"/>
-        <result column="order" property="order" jdbcType="INTEGER"/>
+        <result column="orderlist" property="orderlist" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, parent_id, category_name, level, order
+    id, parent_id, category_name, level, orderlist
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -36,8 +36,8 @@
             <if test="level != null">
                 level,
             </if>
-            <if test="order != null">
-                order,
+            <if test="orderlist != null">
+                orderlist,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -53,8 +53,8 @@
             <if test="level != null">
                 #{level,jdbcType=INTEGER},
             </if>
-            <if test="order != null">
-                #{order,jdbcType=INTEGER},
+            <if test="orderlist != null">
+                #{orderlist,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -70,22 +70,23 @@
             <if test="level != null">
                 level = #{level,jdbcType=INTEGER},
             </if>
-            <if test="order != null">
-                order = #{order,jdbcType=INTEGER},
+            <if test="orderlist != null">
+                orderlist = #{orderlist,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <select id="selectByLevel" parameterType="int">
+    <select id="selectByLevel" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ac_category
-        WHERE level=1
+        WHERE level=1 ORDER BY orderlist
     </select>
-    <select id="selectChild" parameterType="int">
+    <select id="selectChild" resultMap="BaseResultMap" parameterType="int">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ac_category
         WHERE parent_id=#{parentId,jdbcType=INTEGER}
+        ORDER BY  orderlist
     </select>
 </mapper>

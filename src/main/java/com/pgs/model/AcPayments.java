@@ -1,6 +1,7 @@
 package com.pgs.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -22,6 +23,8 @@ public class AcPayments implements Serializable {
     private Integer moneyType;
 
     private String remark;
+
+    private BigDecimal money;
 
     public Integer getId() {
         return id;
@@ -85,5 +88,13 @@ public class AcPayments implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 }

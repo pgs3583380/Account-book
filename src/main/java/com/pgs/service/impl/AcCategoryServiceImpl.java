@@ -4,10 +4,14 @@ import com.pgs.mapper.AcCategoryMapper;
 import com.pgs.model.AcCategory;
 import com.pgs.service.AcCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/21.
  */
+@Service
 public class AcCategoryServiceImpl implements AcCategoryService {
     @Autowired
     AcCategoryMapper acCategoryMapper;
@@ -30,5 +34,15 @@ public class AcCategoryServiceImpl implements AcCategoryService {
     @Override
     public int updateByPrimaryKeySelective(AcCategory record) {
         return acCategoryMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public List<AcCategory> selectByLevel() {
+        return acCategoryMapper.selectByLevel();
+    }
+
+    @Override
+    public List<AcCategory> selectChild(int parentId) {
+        return acCategoryMapper.selectChild(parentId);
     }
 }

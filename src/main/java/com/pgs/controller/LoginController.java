@@ -31,7 +31,7 @@ public class LoginController {
     private AcUserService acUserService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> login(AcUser user, Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public Map<String, Object> login(AcUser user, HttpServletResponse response) throws IOException {
         String msg = "";
         Map<String, Object> map = new HashMap<>();
         int flag = GlobalConstant.LOGIN_ERROR;

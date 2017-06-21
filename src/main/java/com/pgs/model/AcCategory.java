@@ -14,7 +14,7 @@ public class AcCategory implements Serializable {
 
     private Integer level;
 
-    private Integer order;
+    private Integer orderlist;
 
     public Integer getId() {
         return id;
@@ -48,11 +48,11 @@ public class AcCategory implements Serializable {
         this.level = level;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderlist() {
+        return orderlist;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrderlist(Integer orderlist) {
+        this.orderlist = orderlist;
     }
 }

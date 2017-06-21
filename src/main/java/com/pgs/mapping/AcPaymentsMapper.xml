@@ -10,9 +10,10 @@
         <result column="category_type" property="categoryType" jdbcType="INTEGER"/>
         <result column="money_type" property="moneyType" jdbcType="INTEGER"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, userid, createtime, updatetime, time, category_type, money_type, remark
+    id, userid, createtime, updatetime, time, category_type, money_type, remark,money
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -27,9 +28,6 @@
     <insert id="insertSelective" parameterType="com.pgs.model.AcPayments">
         insert into ac_payments
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="userid != null">
                 userid,
             </if>
@@ -51,11 +49,11 @@
             <if test="remark != null">
                 remark,
             </if>
+            <if test="money !=null">
+                money,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
             <if test="userid != null">
                 #{userid,jdbcType=INTEGER},
             </if>
@@ -76,6 +74,9 @@
             </if>
             <if test="remark != null">
                 #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="money !=null">
+                #{money,jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
@@ -102,6 +103,9 @@
             </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="money !=null">
+                #{money,jdbcType=DECIMAL},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
