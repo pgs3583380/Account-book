@@ -80,13 +80,14 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM ac_category
-        WHERE level=1 ORDER BY orderlist
+        WHERE level=#{level,jdbcType=INTEGER}
+        ORDER BY orderlist
     </select>
     <select id="selectChild" resultMap="BaseResultMap" parameterType="int">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ac_category
         WHERE parent_id=#{parentId,jdbcType=INTEGER}
-        ORDER BY  orderlist
+        ORDER BY orderlist
     </select>
 </mapper>

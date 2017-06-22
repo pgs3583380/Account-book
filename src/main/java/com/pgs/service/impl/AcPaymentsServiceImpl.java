@@ -3,8 +3,11 @@ package com.pgs.service.impl;
 import com.pgs.mapper.AcPaymentsMapper;
 import com.pgs.model.AcPayments;
 import com.pgs.service.AcPaymentsService;
+import com.pgs.vo.AcPaymentsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/21.
@@ -32,5 +35,10 @@ public class AcPaymentsServiceImpl implements AcPaymentsService {
     @Override
     public int updateByPrimaryKeySelective(AcPayments record) {
         return acPaymentsMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public List<AcPaymentsVo> selectByCondition(AcPaymentsVo vo) {
+        return acPaymentsMapper.selectByCondition(vo);
     }
 }

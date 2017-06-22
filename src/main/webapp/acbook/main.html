@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript">
+        var level_list = [];
+        function getchild(v) {
+            var parentId;
+            var level;
+            if (v == 'pay') {
+                parentId = $("#pay_level_1").val();
+                level = $("#pay_level_2");
+            }
+            if (v == 'income') {
+                parentId = $("#income_level_1").val();
+                level = $("#income_level_2");
+            }
+            level.children().remove();
+            var len = level_list.length;
+            level.append('<option value="">二级</option>')
+            for (var i = 0; i < len; i++) {
+                if (level_list[i].parentId == parentId) {
+                    level.append('<option value=' + level_list[i].id + '>' + level_list[i].categoryName + '</option>')
+                }
+            }
+        }
+        function getlevel2() {
+            $.ajax({
+                url: "/getlevel.do?aa=" + new Date(),
+                type: "get",
+                dataType: "json",
+                data: {
+                    "level": 3
+                },
+                success: function (data) {
+                    level_list = data.list;
+                }
+            });
+        }
+        function getlevel() {
+            $.ajax({
+                url: "/getlevel.do?aa=" + new Date(),
+                type: "get",
+                dataType: "json",
+                data: {
+                    "level": 2
+                },
+                success: function (data) {
+                    var list = data.list;
+                    var len = list.length;
+                    for (var i = 0; len > i; i++) {
+                        if (list[i].parentId == 1) {
+                            $("#pay_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
+                        } else {
+                            $("#income_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
+                        }
+                    }
+                }
+            });
+        }
+        function save(v) {
+            var moneyType;
+            var remark;
+            var time;
+            var money;
+            var categoryType;
+            if (v == 'pay') {
+                moneyType = 1;
+                remark = $("#remark").val();
+                time = $("#time").val();
+                money = $("#money").val();
+                categoryType = $("#pay_level_2").val();
+            } else {
+                moneyType = 2;
+                remark = $("#income_remark").val();
+                time = $("#income_time").val();
+                money = $("#income_money").val();
+                categoryType = $("#income_level_2").val();
+            }
+            if (isEmpty(categoryType)) {
+                alert("资金类型请选择第二级");
+                return;
+            }
+            $.ajax({
+                url: "/saveOrupdate.do",
+                type: "post",
+                dataType: "json",
+                data: {
+                    "money": money,
+                    "categoryType": categoryType,
+                    "moneyType": moneyType,
+                    "remark": remark,
+                    "editTime": time
+                },
+                success: function (data) {
+                    var flag = data.flag;
+                    if (flag == 0) {
+                        window.location.href = "../login.html"
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        $(function () {
+            getlevel();
+            getlevel2();
+        });
+    </script>
+</head>
+<body>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#pay" aria-controls="pay" role="tab" data-toggle="tab">支出</a>
+    </li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">收入</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content" style="border: 1px solid #D6D6D6;padding: 5px;">
+    <div role="tabpanel" class="tab-pane active " id="pay">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-1 control-label">type</label>
+                <div class="col-sm-2 form-inline">
+                    <select id="pay_level_1" onchange="getchild('pay')" class="form-control">
+                        <option value="">一级</option>
+                    </select>
+                    <select id="pay_level_2" class="form-control">
+                        <option value="">二级</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="money" class="col-xs-1 control-label">money</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="money" placeholder="money">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="time" class="col-xs-1 control-label">time</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="time" placeholder="time"
+                           onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="remark" class="col-xs-1 control-label">remark</label>
+                <div class="col-sm-2">
+                    <textarea rows="3" class="form-control" id="remark" placeholder="remark"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="time" class="col-xs-1 control-label"></label>
+                <div class="col-sm-2">
+                    <input type="button" value="save" class="btn btn-default" onclick="save('pay')"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-1 control-label">type</label>
+                <div class="col-sm-2 form-inline">
+                    <select id="income_level_1" onchange="getchild('income')" class="form-control">
+                        <option value="">一级</option>
+                    </select>
+                    <select id="income_level_2" class="form-control">
+                        <option value="">二级</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="income_money" class="col-xs-1 control-label">money</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="income_money" placeholder="money">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="income_time" class="col-xs-1 control-label">time</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="income_time" placeholder="time"
+                           onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="income_remark" class="col-xs-1 control-label">remark</label>
+                <div class="col-sm-2">
+                    <textarea rows="3" class="form-control" id="income_remark" placeholder="remark"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="time" class="col-xs-1 control-label"></label>
+                <div class="col-sm-2">
+                    <input type="button" value="save" class="btn btn-default" onclick="save('income')"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

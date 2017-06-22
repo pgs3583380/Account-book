@@ -50,6 +50,7 @@
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-ehcache:1.0.0" />
           <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.0.0" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.0.31" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">

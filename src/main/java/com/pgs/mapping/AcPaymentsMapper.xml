@@ -6,14 +6,17 @@
         <result column="userid" property="userid" jdbcType="INTEGER"/>
         <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
         <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
-        <result column="time" property="time" jdbcType="TIMESTAMP"/>
+        <result column="edittime" property="editTime" jdbcType="TIMESTAMP"/>
         <result column="category_type" property="categoryType" jdbcType="INTEGER"/>
         <result column="money_type" property="moneyType" jdbcType="INTEGER"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
         <result column="money" property="money" jdbcType="DECIMAL"/>
     </resultMap>
+    <resultMap id="BaseResultMapVo" type="com.pgs.vo.AcPaymentsVo" extends="BaseResultMap">
+        <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
+    </resultMap>
     <sql id="Base_Column_List">
-    id, userid, createtime, updatetime, time, category_type, money_type, remark,money
+    id, userid, createtime, updatetime, editTime, category_type, money_type, remark,money
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -37,8 +40,8 @@
             <if test="updatetime != null">
                 updatetime,
             </if>
-            <if test="time != null">
-                time,
+            <if test="editTime != null">
+                editTime,
             </if>
             <if test="categoryType != null">
                 category_type,
@@ -63,8 +66,8 @@
             <if test="updatetime != null">
                 #{updatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="time != null">
-                #{time,jdbcType=TIMESTAMP},
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
             </if>
             <if test="categoryType != null">
                 #{categoryType,jdbcType=INTEGER},
@@ -92,8 +95,8 @@
             <if test="updatetime != null">
                 updatetime = #{updatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="time != null">
-                time = #{time,jdbcType=TIMESTAMP},
+            <if test="editTime != null">
+                editTime = #{editTime,jdbcType=TIMESTAMP},
             </if>
             <if test="categoryType != null">
                 category_type = #{categoryType,jdbcType=INTEGER},
@@ -110,4 +113,36 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <select id="selectByCondition" resultMap="BaseResultMapVo" parameterType="com.pgs.model.AcPayments">
+        SELECT
+        id
+        , userid
+        , createtime
+        , updatetime
+        , edittime
+        , (SELECT category_name FROM ac_category WHERE id=category_type) AS categoryName
+        , money_type
+        , remark
+        ,money
+        FROM ac_payments
+        <where>
+            1=1
+            <if test="userid != null">
+                AND userid = #{userid,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null and startTime!=''">
+                AND editTime &gt; #{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND editTime &lt; #{endTime,jdbcType=VARCHAR}
+            </if>
+            <if test="categoryType != null">
+                AND category_type = #{categoryType,jdbcType=INTEGER}
+            </if>
+            <if test="moneyType != null">
+                AND money_type = #{moneyType,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY editTime ASC
+    </select>
 </mapper>

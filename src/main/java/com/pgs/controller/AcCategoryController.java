@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * Created by Administrator on 2017/6/21.
+ * 资金类别
  */
 @RestController
 public class AcCategoryController {
@@ -23,36 +24,39 @@ public class AcCategoryController {
     private AcCategoryService acCategoryService;
 
     /**
-     * 获取一级目录
+     * 获取二级目录
+     *
      * @return
      */
-    @RequestMapping(value = "getlevel1", method = RequestMethod.GET)
-    public Map<String, Object> selectByLevel1() {
-        Map<String,Object> map=new HashMap<>();
-        List<AcCategory> list=acCategoryService.selectByLevel();
-        map.put("list",list);
+    @RequestMapping(value = "getlevel", method = RequestMethod.GET)
+    public Map<String, Object> selectByLevel1(int level) {
+        Map<String, Object> map = new HashMap<>();
+        List<AcCategory> list = acCategoryService.selectByLevel(level);
+        map.put("list", list);
         return map;
     }
 
     /**
-     *  获取下一级目录
+     * 获取下一级目录
+     *
      * @param parentId 父级目录id
      * @return
      */
-    @RequestMapping(value = "getchild",method = RequestMethod.GET)
-    public Map<String,Object> selectChild(int parentId){
-        List<AcCategory> list=new ArrayList();
-        Map<String,Object> map=new HashMap<>();
-        String msg="";
-        int flag=GlobalConstant.NORMAL;
-        if("".equals(parentId) || parentId==0){
-            msg= GlobalConstant.MSG_NO_MESSAGE;
-            flag=GlobalConstant.NO_MESSAGE;
-        }else {
-            list=acCategoryService.selectChild(parentId);
+    @RequestMapping(value = "getchild", method = RequestMethod.GET)
+    public Map<String, Object> selectChild(int parentId) {
+        List<AcCategory> list = new ArrayList();
+        Map<String, Object> map = new HashMap<>();
+        String msg = "";
+        int flag = GlobalConstant.NORMAL;
+        if ("".equals(parentId) || parentId == 0) {
+            msg = GlobalConstant.MSG_NO_MESSAGE;
+            flag = GlobalConstant.NO_MESSAGE;
+        } else {
+            list = acCategoryService.selectChild(parentId);
         }
-        map.put("flag",flag);
-        map.put("list",list);
+        map.put("flag", flag);
+        map.put("msg", msg);
+        map.put("list", list);
         return map;
     }
 }

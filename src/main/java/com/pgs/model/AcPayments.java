@@ -1,5 +1,7 @@
 package com.pgs.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,7 +18,7 @@ public class AcPayments implements Serializable {
 
     private Date updatetime;
 
-    private Date time;
+    private Date editTime;
 
     private Integer categoryType;
 
@@ -58,12 +60,12 @@ public class AcPayments implements Serializable {
         this.updatetime = updatetime;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getEditTime() {
+        return editTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setEditTime(Date editTime) {
+        this.editTime = editTime;
     }
 
     public Integer getCategoryType() {

@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head>
+    <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../js/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript">
+        function getchild(v) {
+            var parentId;
+            var level;
+            if (v == 'pay') {
+                parentId = $("#pay_level_1").val();
+                level = $("#pay_level_2");
+            }
+            if (v == 'income') {
+                parentId = $("#income_level_1").val();
+                level = $("#income_level_2");
+            }
+            level.children().remove();
+            var len = level_list.length;
+            level.append('<option value="">二级</option>')
+            for (var i = 0; i < len; i++) {
+                if (level_list[i].parentId == parentId) {
+                    level.append('<option value=' + level_list[i].id + '>' + level_list[i].categoryName + '</option>')
+                }
+            }
+        }
+        function getlevel2() {
+            $.ajax({
+                url: "/getlevel.do?aa=" + new Date(),
+                type: "get",
+                dataType: "json",
+                data: {
+                    "level": 3
+                },
+                success: function (data) {
+                    level_list = data.list;
+                }
+            });
+        }
+        function getlevel() {
+            $.ajax({
+                url: "/getlevel.do?aa=" + new Date(),
+                type: "get",
+                dataType: "json",
+                data: {
+                    "level": 2
+                },
+                success: function (data) {
+                    var list = data.list;
+                    var len = list.length;
+                    for (var i = 0; len > i; i++) {
+                        $("#pay_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
+                    }
+                }
+            });
+        }
+        function searchInfo() {
+            var categoryType = $("#pay_level_2").val();
+            var categoryType1 = $("#pay_level_1").val();
+            var startTime = $("#startTime").val();
+            var entTime = $("#endTime").val();
+            if (isEmpty(categoryType) && !isEmpty(categoryType1)) {
+                alert("资金类型请选择第二级");
+                return;
+            }
+            $.ajax({
+                url: "/selectByCondition.do",
+                type: "post",
+                dataType: "json",
+                data: {
+                    "categoryType": categoryType,
+                    "startTime": startTime,
+                    "endTIme": entTime
+                },
+                success: function (data) {
+                    var flag = data.flag;
+                    if (flag == 2) {
+                        alert(data.msg);
+                    } else {
+                        var list = data.list;
+                        var len = list.length;
+                        console.log(list);
+                        console.log(len);
+                        for (var i = 0; i < len; i++) {
+                            $("#info").append('<tr>'
+                                + '<td>' + list[i].categoryName + '</td>'
+                                + '<td>' + list[i].money + '</td>'
+                                + '<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="' + list[i].editTime + '"></fmt:formatDate></td>'
+                                + '<td>' + list[i].remark + '</td>'
+                                + '</tr>'
+                            );
+                        }
+                    }
+                }
+            });
+        }
+        function add() {
+            window.location.href = "main.html";
+        }
+        $(function () {
+            getlevel();
+            getlevel2();
+        });
+    </script>
+</head>
+<body>
+<div style="border: 1px solid #D6D6D6;padding: 5px;">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-1 control-label">type</label>
+            <div class="col-sm-2 form-inline">
+                <select id="pay_level_1" onchange="getchild('pay')" class="form-control">
+                    <option value="">一级</option>
+                </select>
+                <select id="pay_level_2" class="form-control">
+                    <option value="">二级</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="startTime" class="col-xs-1 control-label">time</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="startTime" placeholder="startTime"
+                       onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="endTime" placeholder="endTime"
+                       onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-1 control-label"></label>
+            <div class="col-sm-2">
+                <input type="button" value="search" class="btn btn-default" onclick="searchInfo()"/>
+            </div>
+            <div class="col-sm-2">
+                <input type="button" value="add" class="btn btn-default" onclick="add()"/>
+            </div>
+        </div>
+    </form>
+</div>
+<table class="table table-hover" id="info">
+    <thead>
+    <tr>
+        <th>类别</th>
+        <th>金额</th>
+        <th>时间</th>
+        <th>备注</th>
+    </tr>
+    </thead>
+</table>
+</body>
+</html>

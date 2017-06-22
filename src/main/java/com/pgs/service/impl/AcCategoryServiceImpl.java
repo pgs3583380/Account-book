@@ -37,8 +37,8 @@ public class AcCategoryServiceImpl implements AcCategoryService {
     }
 
     @Override
-    public List<AcCategory> selectByLevel() {
-        return acCategoryMapper.selectByLevel();
+    public List<AcCategory> selectByLevel(int level) {
+        return acCategoryMapper.selectByLevel(level);
     }
 
     @Override

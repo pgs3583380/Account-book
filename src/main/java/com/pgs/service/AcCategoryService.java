@@ -20,7 +20,7 @@ public interface AcCategoryService {
      * 获得1级目录
      * @return
      */
-    List<AcCategory> selectByLevel();
+    List<AcCategory> selectByLevel(int level);
 
     /**
      * 获得下一级目录
