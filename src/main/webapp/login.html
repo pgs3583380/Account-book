@@ -7,6 +7,68 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.min.css"/>
+    <style type="text/css">
+        .form-control {
+            width: 76%;
+        }
+
+        label {
+            width: 20%;
+            float: left;
+            line-height: 34px;
+            color: white;
+        }
+
+        .input {
+            float: left;
+            margin-left: 4%;
+            background: none;
+            color: white;
+            border: 1px solid #fff
+
+        }
+
+        .input:focus {
+            border: 1px solid white;
+            box-shadow: 0 0 6px white;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .form-back {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        body {
+            background-image: url("img/index5.jpg");
+            background-size: 100%;
+            background-position: top center;
+            background-repeat: no-repeat;
+
+        }
+
+        button.btn {
+            padding: 6px 30px;
+            margin-left: 4%;
+           -- background: rgb(239,213,176);
+        }
+        .formcnt{
+            padding: 50px 0px;
+            width: 500px;
+            margin-top:15%;
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.1);
+            box-shadow: 0px 0px 20px rgba(255,255,255,0.3);
+            border: 2px solid rgb(161,194,61);
+            --background: url(img/index5.jpg);
+            background-position: top center;
+
+
+        }
+    </style>
     <script type="text/javascript">
         function login() {
             var username = $("#username").val();
@@ -36,17 +98,25 @@
     </script>
 </head>
 <body>
-<div style="border: 1px solid #D6D6D6;padding: 5px;width: 500px;margin-top: 10px;" class="center-block" >
+<div class="formcnt center-block" style="">
+
     <form role="form">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Username">
+        <div class="form-back">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control input" id="username" placeholder="Username">
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control input" id="password" placeholder="Password">
+                <div class="clear"></div>
+            </div>
+            <div>
+                <label></label>
+                <button type="button" class="btn btn-warning" onclick="login()">login</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password">
-        </div>
-        <button type="button" class="btn btn-default center-block" onclick="login()">login</button>
     </form>
 </div>
 </body>
