@@ -12,7 +12,7 @@ public class AcPayments {
 
     private Date updatetime;
 
-    private Date edittime;
+    private Date editTime;
 
     private Integer categoryType;
 
@@ -56,12 +56,12 @@ public class AcPayments {
         this.updatetime = updatetime;
     }
 
-    public Date getEdittime() {
-        return edittime;
+    public Date getEditTime() {
+        return editTime;
     }
 
-    public void setEdittime(Date edittime) {
-        this.edittime = edittime;
+    public void setEditTime(Date editTime) {
+        this.editTime = editTime;
     }
 
     public Integer getCategoryType() {

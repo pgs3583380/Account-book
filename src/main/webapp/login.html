@@ -5,7 +5,7 @@
 <head>
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         .form-control {
@@ -88,7 +88,7 @@
                 success: function (data) {
                     var flag = data.flag;
                     if (flag == 1) {
-                        window.location.href = "acbook/payments.html";
+                        window.location.href = "/acbook/payments.html";
                     } else {
                         alert(data.msg);
                     }

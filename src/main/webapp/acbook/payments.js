@@ -196,7 +196,7 @@ function update() {
         success: function (data) {
             var flag = data.flag;
             if (flag == 0) {
-                window.location.href = "../login.html"
+                window.location.href = "/login.html"
             } else {
                 alert(data.msg);
                 if (data.editCode == 4) {
@@ -208,7 +208,7 @@ function update() {
     })
 }
 function add() {
-    window.location.href = "main.html";
+    window.location.href = "/acbook/main.html";
 }
 $(function () {
     getlevel();

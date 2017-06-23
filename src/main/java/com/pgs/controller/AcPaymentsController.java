@@ -49,8 +49,8 @@ public class AcPaymentsController extends BaseController {
                 if (StringUtils.isEmpty(acPayments.getId())) {//save
                     acPayments.setUserid(acUser.getId());
                     acPayments.setCreatetime(now);
-                    if (StringUtils.isEmpty(acPayments.getEdittime())) {
-                        acPayments.setEdittime(now);
+                    if (StringUtils.isEmpty(acPayments.getEditTime())) {
+                        acPayments.setEditTime(now);
                     }
                     count = acPaymentsService.insertSelective(acPayments);
                 } else {//update
