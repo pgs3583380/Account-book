@@ -7,106 +7,29 @@
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/laydate/laydate.js"></script>
     <script type="text/javascript" src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="payments.js?v=201706231237"></script>
     <link rel="stylesheet" type="text/css" href="../js/bootstrap/css/bootstrap.min.css"/>
-    <script type="text/javascript">
-        function getchild(v) {
-            var parentId;
-            var level;
-            if (v == 'pay') {
-                parentId = $("#pay_level_1").val();
-                level = $("#pay_level_2");
-            }
-            if (v == 'income') {
-                parentId = $("#income_level_1").val();
-                level = $("#income_level_2");
-            }
-            level.children().remove();
-            var len = level_list.length;
-            level.append('<option value="">二级</option>')
-            for (var i = 0; i < len; i++) {
-                if (level_list[i].parentId == parentId) {
-                    level.append('<option value=' + level_list[i].id + '>' + level_list[i].categoryName + '</option>')
-                }
-            }
+    <style type="text/css">
+        table th {
+            width: 16.6%;
         }
-        function getlevel2() {
-            $.ajax({
-                url: "/getlevel.do?aa=" + new Date(),
-                type: "get",
-                dataType: "json",
-                data: {
-                    "level": 3
-                },
-                success: function (data) {
-                    level_list = data.list;
-                }
-            });
+
+        table td {
+            width: 16.6%;
         }
-        function getlevel() {
-            $.ajax({
-                url: "/getlevel.do?aa=" + new Date(),
-                type: "get",
-                dataType: "json",
-                data: {
-                    "level": 2
-                },
-                success: function (data) {
-                    var list = data.list;
-                    var len = list.length;
-                    for (var i = 0; len > i; i++) {
-                        $("#pay_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
-                    }
-                }
-            });
+
+        .money-pay {
+            color: green;
         }
-        function searchInfo() {
-            var categoryType = $("#pay_level_2").val();
-            var categoryType1 = $("#pay_level_1").val();
-            var startTime = $("#startTime").val();
-            var entTime = $("#endTime").val();
-            if (isEmpty(categoryType) && !isEmpty(categoryType1)) {
-                alert("资金类型请选择第二级");
-                return;
-            }
-            $.ajax({
-                url: "/selectByCondition.do",
-                type: "post",
-                dataType: "json",
-                data: {
-                    "categoryType": categoryType,
-                    "startTime": startTime,
-                    "endTIme": entTime
-                },
-                success: function (data) {
-                    var flag = data.flag;
-                    if (flag == 2) {
-                        alert(data.msg);
-                    } else {
-                        var list = data.list;
-                        var len = list.length;
-                        console.log(list);
-                        console.log(len);
-                        for (var i = 0; i < len; i++) {
-                            $("#info").append('<tr>'
-                                + '<td>' + list[i].categoryName + '</td>'
-                                + '<td>' + list[i].money + '</td>'
-                                + '<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="' + list[i].editTime + '"></fmt:formatDate></td>'
-                                + '<td>' + list[i].remark + '</td>'
-                                + '</tr>'
-                            );
-                        }
-                    }
-                }
-            });
+
+        .money-income {
+            color: red;
         }
-        function add() {
-            window.location.href = "main.html";
+
+        table {
+            margin-left: 30px;
         }
-        $(function () {
-            getlevel();
-            getlevel2();
-        });
-    </script>
+    </style>
 </head>
 <body>
 <div style="border: 1px solid #D6D6D6;padding: 5px;">
@@ -114,7 +37,7 @@
         <div class="form-group">
             <label class="col-xs-1 control-label">type</label>
             <div class="col-sm-2 form-inline">
-                <select id="pay_level_1" onchange="getchild('pay')" class="form-control">
+                <select id="pay_level_1" onchange="getchild('s')" class="form-control">
                     <option value="">一级</option>
                 </select>
                 <select id="pay_level_2" class="form-control">
@@ -144,15 +67,69 @@
         </div>
     </form>
 </div>
-<table class="table table-hover" id="info">
+<table class="table">
     <thead>
     <tr>
+        <th>查看</th>
         <th>类别</th>
         <th>金额</th>
         <th>时间</th>
         <th>备注</th>
+        <th>删除</th>
     </tr>
     </thead>
 </table>
+<table class="table table-hover" id="info">
+</table>
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" id="infoId"/>
+                        <label class="col-xs-2 control-label">type</label>
+                        <div class="col-sm-6 form-inline">
+                            <select id="level1" onchange="getchild('i')" class="form-control">
+                                <option value="">一级</option>
+                            </select>
+                            <select id="level2" class="form-control">
+                                <option value="">二级</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="money" class="col-xs-2 control-label">money</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="money" placeholder="money">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="time" class="col-xs-2 control-label">time</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="time" placeholder="time"
+                                   onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remark" class="col-xs-2 control-label">remark</label>
+                        <div class="col-sm-6">
+                            <textarea rows="3" class="form-control" id="remark" placeholder="remark"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="update()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

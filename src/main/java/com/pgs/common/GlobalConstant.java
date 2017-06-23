@@ -18,6 +18,14 @@ public class GlobalConstant {
 
     public static int THIRD_LEVEL = 3;
 
+    public static int SAVE_SUCCESS = 4;
+
+    public static int SAVE_FAIL = 5;
+
+    public static int DEL_SUCCESS = 6;
+
+    public static int DEL_FAIL = 7;
+
     public static String NO_USER = "用户不存在";
 
     public static String NO_PASSWORDANDUSER = "用户名或密码不能为空";
@@ -29,4 +37,8 @@ public class GlobalConstant {
     public static String MSG_SAVE_SUCCESS = "保存成功";
 
     public static String MSG_SAVE_FAIL = "保存失败";
+
+    public static String MSG_DEL_SUCCESS = "删除成功";
+
+    public static String MSG_DEL_FAIL = "删除失败";
 }

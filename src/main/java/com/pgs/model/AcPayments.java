@@ -1,5 +1,6 @@
 package com.pgs.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -27,6 +28,8 @@ public class AcPayments implements Serializable {
     private String remark;
 
     private BigDecimal money;
+    //类别一级目录，冗余字段
+    private Integer categoryParent;
 
     public Integer getId() {
         return id;
@@ -60,6 +63,7 @@ public class AcPayments implements Serializable {
         this.updatetime = updatetime;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getEditTime() {
         return editTime;
     }
@@ -98,5 +102,13 @@ public class AcPayments implements Serializable {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    public Integer getCategoryParent() {
+        return categoryParent;
+    }
+
+    public void setCategoryParent(Integer categoryParent) {
+        this.categoryParent = categoryParent;
     }
 }
