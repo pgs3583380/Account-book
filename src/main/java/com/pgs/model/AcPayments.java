@@ -1,16 +1,9 @@
 package com.pgs.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * 流水表
- */
-public class AcPayments implements Serializable {
+public class AcPayments {
     private Integer id;
 
     private Integer userid;
@@ -19,17 +12,17 @@ public class AcPayments implements Serializable {
 
     private Date updatetime;
 
-    private Date editTime;
+    private Date edittime;
 
     private Integer categoryType;
+
+    private Integer categoryParent;
 
     private Integer moneyType;
 
     private String remark;
 
     private BigDecimal money;
-    //类别一级目录，冗余字段
-    private Integer categoryParent;
 
     public Integer getId() {
         return id;
@@ -63,13 +56,12 @@ public class AcPayments implements Serializable {
         this.updatetime = updatetime;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    public Date getEditTime() {
-        return editTime;
+    public Date getEdittime() {
+        return edittime;
     }
 
-    public void setEditTime(Date editTime) {
-        this.editTime = editTime;
+    public void setEdittime(Date edittime) {
+        this.edittime = edittime;
     }
 
     public Integer getCategoryType() {
@@ -78,6 +70,14 @@ public class AcPayments implements Serializable {
 
     public void setCategoryType(Integer categoryType) {
         this.categoryType = categoryType;
+    }
+
+    public Integer getCategoryParent() {
+        return categoryParent;
+    }
+
+    public void setCategoryParent(Integer categoryParent) {
+        this.categoryParent = categoryParent;
     }
 
     public Integer getMoneyType() {
@@ -102,13 +102,5 @@ public class AcPayments implements Serializable {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
-    }
-
-    public Integer getCategoryParent() {
-        return categoryParent;
-    }
-
-    public void setCategoryParent(Integer categoryParent) {
-        this.categoryParent = categoryParent;
     }
 }
