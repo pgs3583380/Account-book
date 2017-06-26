@@ -5,9 +5,9 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="createtime" property="createtime" jdbcType="DATE"/>
-        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
-        <result column="lastlogintime" property="lastlogintime" jdbcType="TIMESTAMP"/>
+        <result column="createtime" property="createtime" jdbcType="VARCHAR"/>
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR"/>
+        <result column="lastlogintime" property="lastlogintime" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, username, password, createtime, updatetime, lastlogintime
@@ -55,13 +55,13 @@
                 #{password,jdbcType=VARCHAR},
             </if>
             <if test="createtime != null">
-                #{createtime,jdbcType=TIMESTAMP},
+                #{createtime,jdbcType=VARCHAR},
             </if>
             <if test="updatetime != null">
-                #{updatetime,jdbcType=TIMESTAMP},
+                #{updatetime,jdbcType=VARCHAR},
             </if>
             <if test="lastlogintime != null">
-                #{lastlogintime,jdbcType=TIMESTAMP},
+                #{lastlogintime,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -75,13 +75,13 @@
                 password = #{password,jdbcType=VARCHAR},
             </if>
             <if test="createtime != null">
-                createtime = #{createtime,jdbcType=TIMESTAMP},
+                createtime = #{createtime,jdbcType=VARCHAR},
             </if>
             <if test="updatetime != null">
-                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+                updatetime = #{updatetime,jdbcType=VARCHAR},
             </if>
             <if test="lastlogintime != null">
-                lastlogintime = #{lastlogintime,jdbcType=TIMESTAMP},
+                lastlogintime = #{lastlogintime,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

@@ -13,11 +13,11 @@ public class AcUser implements Serializable{
 
     private String password;
 
-    private Date createtime;
+    private String createtime;
 
-    private Date updatetime;
+    private String updatetime;
 
-    private Date lastlogintime;
+    private String lastlogintime;
 
     public Integer getId() {
         return id;
@@ -43,27 +43,27 @@ public class AcUser implements Serializable{
         this.password = password;
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
-    public Date getUpdatetime() {
+    public String getUpdatetime() {
         return updatetime;
     }
 
-    public void setUpdatetime(Date updatetime) {
+    public void setUpdatetime(String updatetime) {
         this.updatetime = updatetime;
     }
 
-    public Date getLastlogintime() {
+    public String getLastlogintime() {
         return lastlogintime;
     }
 
-    public void setLastlogintime(Date lastlogintime) {
+    public void setLastlogintime(String lastlogintime) {
         this.lastlogintime = lastlogintime;
     }
 }

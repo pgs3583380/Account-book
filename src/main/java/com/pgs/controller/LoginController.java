@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +66,8 @@ public class LoginController {
             msg = GlobalConstant.MSG_NO_MESSAGE;
             flag = GlobalConstant.NO_MESSAGE;
         } else {
-            Date now = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String now = sdf.format(new Date());
             user.setCreatetime(now);
             user.setLastlogintime(now);
             user.setUpdatetime(now);

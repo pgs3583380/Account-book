@@ -76,6 +76,7 @@
                 alert("用户名或者密码不能为空");
                 return;
             }
+            //check用户名是否存在
             $.ajax({
                 url: "/login.do",
                 type: "post",
