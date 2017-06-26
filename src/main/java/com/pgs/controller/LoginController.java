@@ -9,13 +9,10 @@ import com.pgs.service.AcUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
@@ -56,6 +53,9 @@ public class LoginController {
         return map;
     }
 
+    /**
+     * 注册
+     */
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public Map<String, Object> register(AcUser user) {
         String msg = "";

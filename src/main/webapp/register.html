@@ -69,31 +69,6 @@
         }
     </style>
     <script type="text/javascript">
-        function login() {
-            var username = $("#username").val();
-            var password = $("#password").val();
-            if (isEmpty(username) || isEmpty(password)) {
-                alert("用户名或者密码不能为空");
-                return;
-            }
-            $.ajax({
-                url: "/login.do",
-                type: "post",
-                dataType: "json",
-                data: {
-                    "username": username,
-                    "password": password
-                },
-                success: function (data) {
-                    var flag = data.flag;
-                    if (flag == 1) {
-                        window.location.href = "info/payments.html";
-                    } else {
-                        alert(data.msg);
-                    }
-                }
-            })
-        }
         function register() {
             var username = $("#username").val();
             var password = $("#password").val();
@@ -104,9 +79,10 @@
             }
             if (password != repassword) {
                 alert("两次密码输入不一致");
+                return;
             }
             $.ajax({
-                url: "/login.do",
+                url: "/register.do",
                 type: "post",
                 dataType: "json",
                 data: {
@@ -115,18 +91,17 @@
                 },
                 success: function (data) {
                     var flag = data.flag;
-                    if (flag == 1) {
-                        window.location.href = "info/payments.html";
-                    } else {
-                        alert(data.msg);
+                    alert(data.msg);
+                    if (flag == 8) {
+                        window.location.href = "login.html";
                     }
                 }
             })
         }
         $(function () {
-            $("#password").keydown(function (e) {
+            $("#repassword").keydown(function (e) {
                 if (e.keyCode == 13) {
-                    login();
+                    register();
                 }
             })
         })

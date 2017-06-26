@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/payment")
-public class AcPaymentsController extends BaseController {
+public class AcPaymentsController{
     private static Logger logger = LoggerFactory.getLogger(AcPaymentsController.class);
     @Autowired
     private AcPaymentsService acPaymentsService;
@@ -44,7 +45,8 @@ public class AcPaymentsController extends BaseController {
         } else {
             if (null != acPayments) {
                 int count;
-                Date now = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String now = sdf.format(new Date());
                 acPayments.setUpdatetime(now);
                 if (StringUtils.isEmpty(acPayments.getId())) {//save
                     acPayments.setUserid(acUser.getId());

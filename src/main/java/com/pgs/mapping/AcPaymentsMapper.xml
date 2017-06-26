@@ -1,164 +1,161 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pgs.mapper.AcPaymentsMapper">
-  <resultMap id="BaseResultMap" type="com.pgs.model.AcPayments">
-    <id column="id" property="id" jdbcType="INTEGER"/>
-    <result column="userid" property="userid" jdbcType="INTEGER"/>
-    <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
-    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
-    <result column="edittime" property="editTime" jdbcType="TIMESTAMP"/>
-    <result column="category_type" property="categoryType" jdbcType="INTEGER"/>
-    <result column="money_type" property="moneyType" jdbcType="INTEGER"/>
-    <result column="remark" property="remark" jdbcType="VARCHAR"/>
-    <result column="money" property="money" jdbcType="DECIMAL"/>
-    <result column="category_parent" property="categoryParent" jdbcType="INTEGER"/>
-  </resultMap>
-  <resultMap id="BaseResultMapVo" type="com.pgs.vo.AcPaymentsVo" extends="BaseResultMap">
-    <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.pgs.model.AcPayments">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userid" property="userid" jdbcType="INTEGER"/>
+        <result column="createtime" property="createtime" jdbcType="VARCHAR"/>
+        <result column="updatetime" property="updatetime" jdbcType="VARCHAR"/>
+        <result column="edittime" property="editTime" jdbcType="VARCHAR"/>
+        <result column="category_type" property="categoryType" jdbcType="INTEGER"/>
+        <result column="money_type" property="moneyType" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="category_parent" property="categoryParent" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="BaseResultMapVo" type="com.pgs.vo.AcPaymentsVo" extends="BaseResultMap">
+        <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, userid, createtime, updatetime, editTime, category_type, money_type, remark,money,category_parent
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List"/>
-    from ac_payments
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ac_payments
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from ac_payments
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.pgs.model.AcPayments">
-    insert into ac_payments
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        userid,
-      </if>
-      <if test="createtime != null">
-        createtime,
-      </if>
-      <if test="updatetime != null">
-        updatetime,
-      </if>
-      <if test="editTime != null">
-        editTime,
-      </if>
-      <if test="categoryType != null">
-        category_type,
-      </if>
-      <if test="moneyType != null">
-        money_type,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="money !=null">
-        money,
-      </if>
-      <if test="categoryParent!=null">
-        category_parent,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="editTime != null">
-        #{editTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="categoryType != null">
-        #{categoryType,jdbcType=INTEGER},
-      </if>
-      <if test="moneyType != null">
-        #{moneyType,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="money !=null">
-        #{money,jdbcType=DECIMAL},
-      </if>
-      <if test="categoryParent!=null">
-        #{categoryParent,jdbcType=INTEGER}
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pgs.model.AcPayments">
-    update ac_payments
-    <set>
-      <if test="userid != null">
-        userid = #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="editTime != null">
-        editTime = #{editTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="categoryType != null">
-        category_type = #{categoryType,jdbcType=INTEGER},
-      </if>
-      <if test="moneyType != null">
-        money_type = #{moneyType,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="money !=null">
-        money= #{money,jdbcType=DECIMAL},
-      </if>
-      <if test="categoryParent!=null">
-        category_parent=#{categoryParent,jdbcType=INTEGER}
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByCondition" resultMap="BaseResultMapVo" parameterType="com.pgs.model.AcPayments">
-    SELECT
-    id
-    , userid
-    , createtime
-    , updatetime
-    , edittime
-    , (SELECT category_name FROM ac_category WHERE id=category_type) AS categoryName
-    , money_type
-    , remark
-    ,money
-    FROM ac_payments
-    <where>
-      1=1
-      <if test="userid != null">
-        AND userid = #{userid,jdbcType=INTEGER}
-      </if>
-      <if test="startTime != null and startTime!=''">
-        AND editTime &gt; #{startTime,jdbcType=VARCHAR}
-      </if>
-      <if test="endTime != null and endTime != ''">
-        AND editTime &lt; #{endTime,jdbcType=VARCHAR}
-      </if>
-      <choose>
-        <when test="categoryType != null">
-          AND category_type = #{categoryType,jdbcType=INTEGER}
-        </when>
-        <when test="categoryParent !=null">
-          AND category_parent=#{categoryParent,jdbcType=INTEGER}
-        </when>
-      </choose>
-      <if test="moneyType != null">
-        AND money_type = #{moneyType,jdbcType=INTEGER}
-      </if>
-    </where>
-    ORDER BY editTime DESC
-    limit 10
-  </select>
+    <insert id="insertSelective" parameterType="com.pgs.model.AcPayments">
+        insert into ac_payments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+            <if test="editTime != null">
+                edittime,
+            </if>
+            <if test="categoryType != null">
+                category_type,
+            </if>
+            <if test="moneyType != null">
+                money_type,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="money !=null">
+                money,
+            </if>
+            <if test="categoryParent!=null">
+                category_parent,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=VARCHAR},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryType != null">
+                #{categoryType,jdbcType=INTEGER},
+            </if>
+            <if test="moneyType != null">
+                #{moneyType,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="money !=null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="categoryParent!=null">
+                #{categoryParent,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pgs.model.AcPayments">
+        update ac_payments
+        <set>
+            <if test="userid != null">
+                userid = #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=VARCHAR},
+            </if>
+            <if test="editTime != null">
+                edittime = #{editTime,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryType != null">
+                category_type = #{categoryType,jdbcType=INTEGER},
+            </if>
+            <if test="moneyType != null">
+                money_type = #{moneyType,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="money !=null">
+                money= #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="categoryParent!=null">
+                category_parent=#{categoryParent,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByCondition" resultMap="BaseResultMapVo" parameterType="com.pgs.model.AcPayments">
+        SELECT
+        id
+        ,DATE_FORMAT(edittime,'%Y-%m-%d %k:%i') AS edittime
+        , (SELECT category_name FROM ac_category WHERE id=category_type) AS categoryName
+        , money_type
+        , remark
+        ,money
+        FROM ac_payments
+        <where>
+            1=1
+            <if test="userid != null">
+                AND userid = #{userid,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null and startTime!=''">
+                AND edittime &gt; #{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND edittime &lt; #{endTime,jdbcType=VARCHAR}
+            </if>
+            <choose>
+                <when test="categoryType != null">
+                    AND category_type = #{categoryType,jdbcType=INTEGER}
+                </when>
+                <when test="categoryParent !=null">
+                    AND category_parent=#{categoryParent,jdbcType=INTEGER}
+                </when>
+            </choose>
+            <if test="moneyType != null">
+                AND money_type = #{moneyType,jdbcType=INTEGER}
+            </if>
+        </where>
+        ORDER BY editTime DESC
+        limit 10
+    </select>
 </mapper>

@@ -50,6 +50,9 @@ function getlevel() {
         }
     });
 }
+function reback() {
+    window.location.href="/login.html";
+}
 function del(id) {
     if (!confirm("确定删除当前流水信息吗？")) {
         return;
@@ -73,7 +76,7 @@ function searchInfo() {
     var categoryType = $("#pay_level_2").val();
     var categoryType1 = $("#pay_level_1").val();
     var startTime = $("#startTime").val();
-    var entTime = $("#endTime").val();
+    var endTime = $("#endTime").val();
     $.ajax({
         url: "/payment/selectByCondition.do",
         type: "post",
@@ -81,7 +84,7 @@ function searchInfo() {
         data: {
             "categoryType": categoryType,
             "startTime": startTime,
-            "endTIme": entTime,
+            "endTime": endTime,
             "categoryParent": categoryType1
         },
         success: function (data) {

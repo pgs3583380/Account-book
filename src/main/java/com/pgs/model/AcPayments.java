@@ -11,11 +11,11 @@ public class AcPayments implements Serializable {
 
     private Integer userid;
 
-    private Date createtime;
+    private String createtime;
 
-    private Date updatetime;
+    private String updatetime;
 
-    private Date editTime;
+    private String editTime;
 
     private Integer categoryType;
 
@@ -43,28 +43,27 @@ public class AcPayments implements Serializable {
         this.userid = userid;
     }
 
-    public Date getCreatetime() {
+    public String getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(String createtime) {
         this.createtime = createtime;
     }
 
-    public Date getUpdatetime() {
+    public String getUpdatetime() {
         return updatetime;
     }
 
-    public void setUpdatetime(Date updatetime) {
+    public void setUpdatetime(String updatetime) {
         this.updatetime = updatetime;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    public Date getEditTime() {
+    public String getEditTime() {
         return editTime;
     }
 
-    public void setEditTime(Date editTime) {
+    public void setEditTime(String editTime) {
         this.editTime = editTime;
     }
 

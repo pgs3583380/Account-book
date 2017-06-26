@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/info/payments.js?v=201706261239"></script>
+    <script type="text/javascript" src="/info/payments.js?v=201706262200"></script>
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         table th {
@@ -54,11 +54,11 @@
             <label for="startTime" class="col-xs-1 control-label">time</label>
             <div class="col-sm-2">
                 <input type="text" class="form-control" id="startTime" placeholder="startTime"
-                       onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+                       onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm'})">
             </div>
             <div class="col-sm-2">
                 <input type="text" class="form-control" id="endTime" placeholder="endTime"
-                       onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
+                       onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm'})">
             </div>
         </div>
         <div class="form-group">
@@ -68,6 +68,9 @@
             </div>
             <div class="col-sm-2">
                 <input type="button" value="add" class="btn btn-default" onclick="add()"/>
+            </div>
+            <div class="col-sm-2">
+                <input type="button" value="add" class="btn btn-default" onclick="reback()"/>
             </div>
         </div>
     </form>

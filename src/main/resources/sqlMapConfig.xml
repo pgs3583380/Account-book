@@ -17,7 +17,7 @@
         <!-- 空字段null字段不返回 -->
         <setting name="callSettersOnNulls" value="true"/>
 
-        <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
 
     <plugins>
