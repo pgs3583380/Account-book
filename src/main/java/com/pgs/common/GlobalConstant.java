@@ -26,6 +26,10 @@ public class GlobalConstant {
 
     public static int DEL_FAIL = 7;
 
+    public static int REGISTER_SUCCESS = 8;
+
+    public static int REGISTER_FAIL = 9;
+
     public static String NO_USER = "用户不存在";
 
     public static String NO_PASSWORDANDUSER = "用户名或密码不能为空";
@@ -41,4 +45,8 @@ public class GlobalConstant {
     public static String MSG_DEL_SUCCESS = "删除成功";
 
     public static String MSG_DEL_FAIL = "删除失败";
+
+    public static String MSG_REGISTER_SUCCESS = "注册成功";
+
+    public static String MSG_REGISTER_FAIL = "注册失败";
 }

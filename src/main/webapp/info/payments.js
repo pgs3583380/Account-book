@@ -11,13 +11,13 @@ function getchild(v) {
         level = $("#level2");
     }
     level.children().remove();
-    var len = level_list.length;
     level.append('<option value="">二级</option>')
-    for (var i = 0; i < len; i++) {
-        if (level_list[i].parentId == parentId) {
-            level.append('<option value=' + level_list[i].id + '>' + level_list[i].categoryName + '</option>')
+    $.each(level_list, function (index, item) {
+        if (item.parentId == parentId) {
+            level.append('<option value=' + item.id + '>' + item.categoryName + '</option>')
+
         }
-    }
+    })
 }
 function getlevel2() {
     $.ajax({
@@ -42,11 +42,11 @@ function getlevel() {
         },
         success: function (data) {
             var list = data.list;
-            var len = list.length;
             level_list_2 = data.list;
-            for (var i = 0; len > i; i++) {
-                $("#pay_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
-            }
+            $.each(list, function (index, item) {
+                $("#pay_level_1").append('<option value=' + item.id + '>' + item.categoryName + '</option>')
+
+            })
         }
     });
 }
@@ -90,28 +90,27 @@ function searchInfo() {
                 alert(data.msg);
             } else {
                 var list = data.list;
-                var len = list.length;
                 $("#info").children().remove();
-                if (len == 0) {
+                if (list.length == 0) {
                     $("#info").append('<tr>'
                         + '<th>未找到流水记录</th>'
                         + '</tr>')
                 } else {
-                    for (var i = 0; i < len; i++) {
+                    $.each(list, function (index, item) {
                         var x = "";
-                        x = '<tr><td><input type="button" value="see" class="btn btn-info"  onclick="selectOne(' + list[i].id + ')"></td>'
-                            + '<td>' + list[i].categoryName + '</td>'
-                        if (list[i].moneyType == 1) {
-                            x += '<td class="money-pay">' + list[i].money + '</td>'
+                        x = '<tr><td><input type="button" value="see" class="btn btn-info"  onclick="selectOne(' + item.id + ')"></td>'
+                            + '<td>' + item.categoryName + '</td>'
+                        if (item.moneyType == 1) {
+                            x += '<td class="money-pay">' + item.money + '</td>'
                         } else {
-                            x += '<td class="money-income">' + list[i].money + '</td>'
+                            x += '<td class="money-income">' + item.money + '</td>'
                         }
-                        x += '<td>' + list[i].editTime + '</td>'
-                            + '<td>' + list[i].remark + '</td>'
-                            + '<td><input type="button" value="delete" class="btn btn-warning" onclick="del(' + list[i].id + ')"></td>'
+                        x += '<td>' + item.editTime + '</td>'
+                            + '<td>' + item.remark + '</td>'
+                            + '<td><input type="button" value="delete" class="btn btn-warning" onclick="del(' + item.id + ')"></td>'
                             + '</tr>'
                         $("#info").append(x);
-                    }
+                    });
                 }
             }
         }
@@ -122,30 +121,28 @@ function clearInfo() {
     $("#level2").children().remove();
 }
 function initInfo(v) {
-    var len1 = level_list.length;
-    var len2 = level_list_2.length;
-    for (var i = 0; i < len2; i++) {
+    $.each(level_list_2, function (index, item) {
         x = "";
-        if (v.moneyType == level_list_2[i].parentId) {
-            if (level_list_2[i].id == v.categoryParent) {
-                x += '<option value=' + level_list_2[i].id + ' selected="selected">' + level_list_2[i].categoryName + '</option>'
+        if (v.moneyType == item.parentId) {
+            if (item.id == v.categoryParent) {
+                x += '<option value=' + item.id + ' selected="selected">' + item.categoryName + '</option>'
             } else {
-                x += '<option value=' + level_list_2[i].id + '>' + level_list_2[i].categoryName + '</option>'
+                x += '<option value=' + item.id + '>' + item.categoryName + '</option>'
             }
         }
         $("#level1").append(x);
-    }
-    for (var i = 0; i < len1; i++) {
+    })
+    $.each(level_list, function (index, item) {
         x = "";
-        if (v.categoryParent == level_list[i].parentId) {
-            if (level_list[i].id == v.categoryType) {
-                x += '<option value=' + level_list[i].id + ' selected="selected">' + level_list[i].categoryName + '</option>'
+        if (v.categoryParent == item.parentId) {
+            if (item.id == v.categoryType) {
+                x += '<option value=' + item.id + ' selected="selected">' + item.categoryName + '</option>'
             } else {
-                x += '<option value=' + level_list[i].id + '>' + level_list[i].categoryName + '</option>'
+                x += '<option value=' + item.id + '>' + item.categoryName + '</option>'
             }
         }
         $("#level2").append(x);
-    }
+    })
     $("#infoId").val(v.id);
     $("#money").val(v.money);
     $("#remark").val(v.remark);
@@ -208,7 +205,7 @@ function update() {
     })
 }
 function add() {
-    window.location.href = "/acbook/main.html";
+    window.location.href = "/info/addInfo.html";
 }
 $(function () {
     getlevel();

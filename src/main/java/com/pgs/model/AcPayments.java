@@ -1,9 +1,12 @@
 package com.pgs.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class AcPayments {
+public class AcPayments implements Serializable {
     private Integer id;
 
     private Integer userid;
@@ -56,6 +59,7 @@ public class AcPayments {
         this.updatetime = updatetime;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getEditTime() {
         return editTime;
     }

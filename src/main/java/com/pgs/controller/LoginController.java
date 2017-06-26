@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +53,34 @@ public class LoginController {
         }
         map.put("flag", flag);
         map.put("msg", msg);
+        return map;
+    }
+
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public Map<String, Object> register(AcUser user) {
+        String msg = "";
+        int flag;
+        Map<String, Object> map = new HashMap<>();
+        if (null == user || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+            msg = GlobalConstant.MSG_NO_MESSAGE;
+            flag = GlobalConstant.NO_MESSAGE;
+        } else {
+            Date now = new Date();
+            user.setCreatetime(now);
+            user.setLastlogintime(now);
+            user.setUpdatetime(now);
+            user.setPassword(Md5.md5Digest(user.getPassword()));
+            int count = acUserService.insertSelective(user);
+            if (count > 0) {
+                msg = GlobalConstant.MSG_REGISTER_SUCCESS;
+                flag = GlobalConstant.REGISTER_SUCCESS;
+            } else {
+                msg = GlobalConstant.MSG_REGISTER_FAIL;
+                flag = GlobalConstant.REGISTER_FAIL;
+            }
+        }
+        map.put("msg", msg);
+        map.put("flag", flag);
         return map;
     }
 }

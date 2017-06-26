@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="utf-8">
 <head>
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         .form-control {
             width: 76%;
@@ -43,7 +43,7 @@
         }
 
         body {
-            background-image: url("img/index5.jpg");
+            background-image: url("/img/index5.jpg");
             background-size: 100%;
             background-position: top center;
             background-repeat: no-repeat;
@@ -95,7 +95,33 @@
             })
         }
         function register() {
-            window.location.href = "register.html"
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var repassword = $("#repassword").val();
+            if (isEmpty(username) || isEmpty(password) || isEmpty(repassword)) {
+                alert("用户名或者密码不能为空");
+                return;
+            }
+            if (password != repassword) {
+                alert("两次密码输入不一致");
+            }
+            $.ajax({
+                url: "/login.do",
+                type: "post",
+                dataType: "json",
+                data: {
+                    "username": username,
+                    "password": password
+                },
+                success: function (data) {
+                    var flag = data.flag;
+                    if (flag == 1) {
+                        window.location.href = "info/payments.html";
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            })
         }
         $(function () {
             $("#password").keydown(function (e) {
@@ -116,13 +142,17 @@
                 <div class="clear"></div>
             </div>
             <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" class="form-control input" id="password" placeholder="密码">
+                <label for="password">新密码</label>
+                <input type="password" class="form-control input" id="password" placeholder="新密码">
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                <label for="repassword">再输入一次</label>
+                <input type="password" class="form-control input" id="repassword" placeholder="再输入一次新密码">
                 <div class="clear"></div>
             </div>
             <div>
                 <label></label>
-                <button type="button" class="btn btn-warning" onclick="login()">登录</button>
                 <button type="button" class="btn btn-warning" onclick="register()">注册</button>
             </div>
         </div>

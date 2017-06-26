@@ -22,13 +22,12 @@
                 level = $("#income_level_2");
             }
             level.children().remove();
-            var len = level_list.length;
             level.append('<option value="">二级</option>')
-            for (var i = 0; i < len; i++) {
-                if (level_list[i].parentId == parentId) {
-                    level.append('<option value=' + level_list[i].id + '>' + level_list[i].categoryName + '</option>')
+            $.each(level_list, function (index, item) {
+                if (item.parentId == parentId) {
+                    level.append('<option value=' + item.id + '>' + item.categoryName + '</option>')
                 }
-            }
+            })
         }
         function getlevel2() {
             $.ajax({
@@ -54,13 +53,13 @@
                 success: function (data) {
                     var list = data.list;
                     var len = list.length;
-                    for (var i = 0; len > i; i++) {
-                        if (list[i].parentId == 1) {
-                            $("#pay_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
+                    $.each(list, function (index, item) {
+                        if (item.parentId == 1) {
+                            $("#pay_level_1").append('<option value=' + item.id + '>' + item.categoryName + '</option>')
                         } else {
-                            $("#income_level_1").append('<option value=' + list[i].id + '>' + list[i].categoryName + '</option>')
+                            $("#income_level_1").append('<option value=' + item.id + '>' + item.categoryName + '</option>')
                         }
-                    }
+                    })
                 }
             });
         }
@@ -70,18 +69,21 @@
             var time;
             var money;
             var categoryType;
+            var categoryParent;
             if (v == 'pay') {
                 moneyType = 1;
                 remark = $("#remark").val();
                 time = $("#time").val();
                 money = $("#money").val();
                 categoryType = $("#pay_level_2").val();
+                categoryParent = $("#pay_level_1").val();
             } else {
                 moneyType = 2;
                 remark = $("#income_remark").val();
                 time = $("#income_time").val();
                 money = $("#income_money").val();
                 categoryType = $("#income_level_2").val();
+                categoryParent = $("#income_level_1").val();
             }
             if (isEmpty(categoryType)) {
                 alert("资金类型请选择第二级");
@@ -96,7 +98,8 @@
                     "categoryType": categoryType,
                     "moneyType": moneyType,
                     "remark": remark,
-                    "editTime": time
+                    "editTime": time,
+                    "categoryParent": categoryParent
                 },
                 success: function (data) {
                     var flag = data.flag;
@@ -105,7 +108,7 @@
                     } else {
                         alert(data.msg);
                         if (data.editCode == 4) {
-                            window.location.href = "/acbook/payments.html"
+                            window.location.href = "/info/payments.html"
                         }
                     }
                 }
