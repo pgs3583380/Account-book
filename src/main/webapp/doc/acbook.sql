@@ -107,14 +107,13 @@ CREATE TABLE `ac_payments` (
   `money_type` int(11) NOT NULL COMMENT '1收入，2支出',
   `remark` varchar(50) DEFAULT NULL COMMENT '备注',
   `money` decimal(10,2) DEFAULT NULL,
+  `category_parent` int(11) NOT  NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ac_payments
 -- ----------------------------
-INSERT INTO `ac_payments` VALUES ('2', '1', '2017-06-22 15:01:33', '2017-06-22 15:01:33', '2017-06-10 00:00:00', '200101', '2', '发工资啦', '5000.00');
-INSERT INTO `ac_payments` VALUES ('3', '1', '2017-06-22 15:05:42', '2017-06-22 15:05:42', '2017-06-22 15:05:40', '100401', '1', '', '10.00');
 
 -- ----------------------------
 -- Table structure for `ac_user`

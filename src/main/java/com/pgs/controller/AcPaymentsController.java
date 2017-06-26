@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/payment")
-public class AcPaymentsController{
+public class AcPaymentsController {
     private static Logger logger = LoggerFactory.getLogger(AcPaymentsController.class);
     @Autowired
     private AcPaymentsService acPaymentsService;
@@ -43,6 +43,7 @@ public class AcPaymentsController{
         if (null == acUser) {
             flag = GlobalConstant.LOGIN_ERROR;
         } else {
+            logger.info("remark:{}", acPayments.getRemark());
             if (null != acPayments) {
                 int count;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
