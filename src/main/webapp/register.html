@@ -98,6 +98,9 @@
                 }
             })
         }
+        function login() {
+            window.location.href = "login.html";
+        }
         $(function () {
             $("#repassword").keydown(function (e) {
                 if (e.keyCode == 13) {
@@ -129,6 +132,7 @@
             <div>
                 <label></label>
                 <button type="button" class="btn btn-warning" onclick="register()">注册</button>
+                <button type="button" class="btn btn-warning" onclick="login()">登录</button>
             </div>
         </div>
     </form>
