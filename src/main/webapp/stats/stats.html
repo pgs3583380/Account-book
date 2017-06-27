@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head>
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/laydate/laydate.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/Chart/Chart.bundle.js"></script>
+    <script src="/js/Chart/utils.js"></script>
+    <script type="text/javascript" src="/stats/stats.js?v=201706271640"></script>
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
+    <style type="text/css">
+        table th {
+            width: 16.6%;
+        }
+
+        table td {
+            width: 16.6%;
+        }
+
+        .money-pay {
+            color: green;
+        }
+
+        .money-income {
+            color: red;
+        }
+
+        .money-all {
+            color: #2aabd2;
+        }
+
+        table {
+            margin-left: 30px;
+        }
+
+        .div-1 {
+            border: 1px solid #D6D6D6;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="div-1">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="startTime" class="col-xs-1 control-label">time</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" id="startTime" placeholder="startTime"
+                       onclick="laydate({format:'YYYY-MM-DD'})">
+            </div>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" id="endTime" placeholder="endTime"
+                       onclick="laydate({format:'YYYY-MM-DD'})">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-1 control-label"></label>
+            <div class="col-sm-1">
+                <input type="button" value="search" class="btn btn-default" onclick="getStats()"/>
+            </div>
+            <div class="col-sm-1">
+                <input type="button" value="reback" class="btn btn-default" onclick="reback()"/>
+            </div>
+            <div class="col-sm-2">
+                <span>收入</span>
+                <span class="money-income" id="income">0</span>
+                <br/>
+                <span>支出</span>
+                <span class="money-pay" id="pay">0</span>
+                <br>
+                <span>净资产</span>
+                <span class="money-all" id="all">0</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="canvas-holder" style="width: 20%">
+</div>
+</body>
+</html>

@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by x on 2017/6/21.
@@ -137,6 +134,68 @@ public class AcPaymentsController {
         }
         map.put("flag", flag);
         map.put("msg", msg);
+        return map;
+    }
+
+    /**
+     * 获取某段时间支出和收入
+     *
+     * @param vo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "getPayAndIncome", method = RequestMethod.POST)
+    public Map<String, Object> getPayAndIncome(AcPaymentsVo vo, HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        AcUser acUser = CookieUtil.getLoginUser(request);
+        int flag = GlobalConstant.LOGIN_SUCCESS;
+        List<AcPaymentsVo> list = new ArrayList<>();
+        String msg = "";
+        if (null == acUser) {
+            flag = GlobalConstant.LOGIN_ERROR;
+        } else {
+            if (vo != null) {
+                vo.setUserid(acUser.getId());
+                list = acPaymentsService.selectPayAndIncome(vo);
+            } else {
+                flag = GlobalConstant.NO_MESSAGE;
+                msg = GlobalConstant.MSG_NO_MESSAGE;
+            }
+        }
+        map.put("flag", flag);
+        map.put("msg", msg);
+        map.put("list", list);
+        return map;
+    }
+
+    /**
+     * 统计二级分类情况
+     *
+     * @param vo
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "getStats", method = RequestMethod.POST)
+    public Map<String, Object> getStats(AcPaymentsVo vo, HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        AcUser acUser = CookieUtil.getLoginUser(request);
+        int flag = GlobalConstant.LOGIN_SUCCESS;
+        List<AcPaymentsVo> list = new ArrayList<>();
+        String msg = "";
+        if (null == acUser) {
+            flag = GlobalConstant.LOGIN_ERROR;
+        } else {
+            if (vo != null) {
+                vo.setUserid(acUser.getId());
+                list = acPaymentsService.selectForStats(vo);
+            } else {
+                flag = GlobalConstant.NO_MESSAGE;
+                msg = GlobalConstant.MSG_NO_MESSAGE;
+            }
+        }
+        map.put("flag", flag);
+        map.put("msg", msg);
+        map.put("list", list);
         return map;
     }
 }

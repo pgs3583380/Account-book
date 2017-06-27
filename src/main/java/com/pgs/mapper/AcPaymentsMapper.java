@@ -16,10 +16,24 @@ public interface AcPaymentsMapper {
 
     int updateByPrimaryKeySelective(AcPayments record);
 
-    int updateByPrimaryKey(AcPayments record);
-
     /**
      * 根据条件查询相关的流水信息
      */
     List<AcPaymentsVo> selectByCondition(AcPaymentsVo vo);
+
+    /**
+     * 获取某时间段的总支出和总支出
+     *
+     * @param vo
+     * @return
+     */
+    List<AcPaymentsVo> selectPayAndIncome(AcPaymentsVo vo);
+
+    /**
+     * 获取某时间段的二级支出和收入
+     * @param vo
+     * @return
+     */
+    List<AcPaymentsVo> selectForStats(AcPaymentsVo vo);
+
 }

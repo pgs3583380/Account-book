@@ -210,6 +210,9 @@ function update() {
 function add() {
     window.location.href = "/info/addInfo.html";
 }
+function toStats() {
+    window.location.href = "/stats/stats.html";
+}
 $(function () {
     getlevel();
     getlevel2();

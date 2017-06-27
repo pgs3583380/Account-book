@@ -41,4 +41,14 @@ public class AcPaymentsServiceImpl implements AcPaymentsService {
     public List<AcPaymentsVo> selectByCondition(AcPaymentsVo vo) {
         return acPaymentsMapper.selectByCondition(vo);
     }
+
+    @Override
+    public List<AcPaymentsVo> selectPayAndIncome(AcPaymentsVo vo) {
+        return acPaymentsMapper.selectPayAndIncome(vo);
+    }
+
+    @Override
+    public List<AcPaymentsVo> selectForStats(AcPaymentsVo vo) {
+        return acPaymentsMapper.selectForStats(vo);
+    }
 }

@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/info/payments.js?v=201706271116"></script>
+    <script type="text/javascript" src="/info/payments.js?v=201706271415    "></script>
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         table th {
@@ -41,10 +41,12 @@
     <form class="form-horizontal">
         <div class="form-group">
             <label class="col-xs-1 control-label">type</label>
-            <div class="col-sm-2 form-inline">
+            <div class="col-sm-1">
                 <select id="pay_level_1" onchange="getchild('s')" class="form-control">
                     <option value="">一级</option>
                 </select>
+            </div>
+            <div class="col-sm-1">
                 <select id="pay_level_2" class="form-control">
                     <option value="">二级</option>
                 </select>
@@ -71,6 +73,9 @@
             </div>
             <div class="col-sm-1">
                 <input type="button" value="reback" class="btn btn-default" onclick="reback()"/>
+            </div>
+            <div class="col-sm-1">
+                <input type="button" value="统计" class="btn btn-default" onclick="toStats()"/>
             </div>
         </div>
     </form>
