@@ -30,6 +30,8 @@ public class GlobalConstant {
 
     public static int REGISTER_FAIL = 9;
 
+    public static int NO_VALIAD_NAME = 10;
+
     public static String NO_USER = "用户不存在";
 
     public static String NO_PASSWORDANDUSER = "用户名或密码不能为空";
@@ -49,4 +51,6 @@ public class GlobalConstant {
     public static String MSG_REGISTER_SUCCESS = "注册成功";
 
     public static String MSG_REGISTER_FAIL = "注册失败";
+
+    public static String MSG_NO_VALIAD_NAME = "用户名已存在";
 }

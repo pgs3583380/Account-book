@@ -66,23 +66,39 @@ public class LoginController {
             msg = GlobalConstant.MSG_NO_MESSAGE;
             flag = GlobalConstant.NO_MESSAGE;
         } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String now = sdf.format(new Date());
-            user.setCreatetime(now);
-            user.setLastlogintime(now);
-            user.setUpdatetime(now);
-            user.setPassword(Md5.md5Digest(user.getPassword()));
-            int count = acUserService.insertSelective(user);
-            if (count > 0) {
-                msg = GlobalConstant.MSG_REGISTER_SUCCESS;
-                flag = GlobalConstant.REGISTER_SUCCESS;
+            if (!checkValidName(user.getUsername())) {
+                msg = GlobalConstant.MSG_NO_VALIAD_NAME;
+                flag = GlobalConstant.NO_VALIAD_NAME;
             } else {
-                msg = GlobalConstant.MSG_REGISTER_FAIL;
-                flag = GlobalConstant.REGISTER_FAIL;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String now = sdf.format(new Date());
+                user.setCreatetime(now);
+                user.setLastlogintime(now);
+                user.setUpdatetime(now);
+                user.setPassword(Md5.md5Digest(user.getPassword()));
+                int count = acUserService.insertSelective(user);
+                if (count > 0) {
+                    msg = GlobalConstant.MSG_REGISTER_SUCCESS;
+                    flag = GlobalConstant.REGISTER_SUCCESS;
+                } else {
+                    msg = GlobalConstant.MSG_REGISTER_FAIL;
+                    flag = GlobalConstant.REGISTER_FAIL;
+                }
             }
         }
         map.put("msg", msg);
         map.put("flag", flag);
         return map;
+    }
+
+    /**
+     * 判断用户名是否重复
+     */
+    public boolean checkValidName(String userName) {
+        AcUser user = acUserService.selectUserByName(userName);
+        if (null == user) {
+            return true;
+        }
+        return false;
     }
 }
