@@ -51,7 +51,7 @@ function getlevel() {
     });
 }
 function reback() {
-    window.location.href="/login.html";
+    window.location.href = "/login.html";
 }
 function del(id) {
     if (!confirm("确定删除当前流水信息吗？")) {
@@ -213,4 +213,5 @@ function add() {
 $(function () {
     getlevel();
     getlevel2();
+    searchInfo();
 });

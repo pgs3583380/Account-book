@@ -138,10 +138,10 @@
                 AND userid = #{userid,jdbcType=INTEGER}
             </if>
             <if test="startTime != null and startTime!=''">
-                AND edittime &gt; #{startTime,jdbcType=VARCHAR}
+                AND substr(edittime,1,10) &gt;= #{startTime,jdbcType=VARCHAR}
             </if>
             <if test="endTime != null and endTime != ''">
-                AND edittime &lt; #{endTime,jdbcType=VARCHAR}
+                AND substr(edittime,1,10) &lt;= #{endTime,jdbcType=VARCHAR}
             </if>
             <choose>
                 <when test="categoryType != null">
