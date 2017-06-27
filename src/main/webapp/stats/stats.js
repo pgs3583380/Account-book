@@ -28,7 +28,7 @@ function init() {
     window.myPie = new Chart(ctx, config);
 };
 function reback() {
-    window.location.href = "/login.html";
+    window.location.href = "/info/payments.html";
 }
 function getPayAndIncome() {
     var startTime = $("#startTime").val();
