@@ -201,4 +201,11 @@
         </where>
         GROUP BY category_parent
     </select>
+    <select id="selectAllDays" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM
+             (SELECT COUNT(*)
+                    FROM ac_payments
+                    WHERE userid=#{userId,jdbcType=INTEGER}
+                    GROUP BY SUBSTR(edittime,1,10)) a
+    </select>
 </mapper>

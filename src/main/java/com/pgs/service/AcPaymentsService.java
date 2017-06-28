@@ -37,4 +37,12 @@ public interface AcPaymentsService {
      * @return
      */
     List<AcPaymentsVo> selectForStats(AcPaymentsVo vo);
+
+    /**
+     * 获取用户记账的天数
+     *
+     * @param userId
+     * @return
+     */
+    int selectAllDays(Integer userId);
 }

@@ -7,7 +7,7 @@
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/laydate/laydate.js"></script>
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/info/payments.js?v=201706271700"></script>
+    <script type="text/javascript" src="/info/payments.js?v=201706280953"></script>
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         table th {
@@ -40,7 +40,7 @@
 <div class="div-1   ">
     <form class="form-horizontal">
         <div class="form-group">
-            <label class="col-xs-1 control-label">type</label>
+            <label class="col-xs-1 control-label">类型</label>
             <div class="col-sm-1">
                 <select id="pay_level_1" onchange="getchild('s')" class="form-control">
                     <option value="">一级</option>
@@ -53,29 +53,29 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="startTime" class="col-xs-1 control-label">time</label>
+            <label for="startTime" class="col-xs-1 control-label">时间</label>
             <div class="col-sm-1">
-                <input type="text" class="form-control" id="startTime" placeholder="startTime"
+                <input type="text" class="form-control" id="startTime" placeholder="开始时间"
                        onclick="laydate({format:'YYYY-MM-DD'})">
             </div>
             <div class="col-sm-1">
-                <input type="text" class="form-control" id="endTime" placeholder="endTime"
+                <input type="text" class="form-control" id="endTime" placeholder="结束时间"
                        onclick="laydate({format:'YYYY-MM-DD'})">
             </div>
         </div>
         <div class="form-group">
             <label class="col-xs-1 control-label"></label>
             <div class="col-sm-1">
-                <input type="button" value="search" class="btn btn-default" onclick="searchInfo()"/>
+                <input type="button" value="查询" class="btn btn-default" onclick="searchInfo()"/>
             </div>
             <div class="col-sm-1">
-                <input type="button" value="add" class="btn btn-default" onclick="add()"/>
-            </div>
-            <div class="col-sm-1">
-                <input type="button" value="reback" class="btn btn-default" onclick="reback()"/>
+                <input type="button" value="新增" class="btn btn-default" onclick="add()"/>
             </div>
             <div class="col-sm-1">
                 <input type="button" value="统计" class="btn btn-default" onclick="toStats()"/>
+            </div>
+            <div class="col-sm-1">
+                <input type="button" value="返回" class="btn btn-default" onclick="reback()"/>
             </div>
         </div>
     </form>
@@ -106,7 +106,7 @@
                 <form class="form-horizontal">
                     <div class="form-group">
                         <input type="hidden" id="infoId"/>
-                        <label class="col-xs-2 control-label">type</label>
+                        <label class="col-xs-2 control-label">类型</label>
                         <div class="col-sm-6 form-inline">
                             <select id="level1" onchange="getchild('i')" class="form-control">
                                 <option value="">一级</option>
@@ -117,20 +117,20 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="money" class="col-xs-2 control-label">money</label>
+                        <label for="money" class="col-xs-2 control-label">金额</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="money" placeholder="money">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="time" class="col-xs-2 control-label">time</label>
+                        <label for="time" class="col-xs-2 control-label">时间</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="time" placeholder="time"
                                    onclick="laydate({istime: true,format:'YYYY-MM-DD hh:mm:ss'})">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="remark" class="col-xs-2 control-label">remark</label>
+                        <label for="remark" class="col-xs-2 control-label">备注</label>
                         <div class="col-sm-6">
                             <textarea rows="3" class="form-control" id="remark" placeholder="remark"></textarea>
                         </div>
@@ -138,8 +138,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="update()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="update()">保存</button>
             </div>
         </div>
     </div>

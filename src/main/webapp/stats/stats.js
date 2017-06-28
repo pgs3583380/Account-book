@@ -68,6 +68,7 @@ function getStats() {
     var endTime = $("#endTime").val();
     $("#canvas-holder").children().remove();
     $("#canvas-holder").append('<canvas id="chart-area"/>');
+    var moneyType = $("#btn_all input:radio:checked").val()
     $.ajax({
         url: "/payment/getStats.do",
         type: "post",
@@ -75,6 +76,7 @@ function getStats() {
         data: {
             "startTime": startTime,
             "endTime": endTime,
+            "moneyType": moneyType
         },
         success: function (data) {
             var flag = data.flag;
@@ -99,4 +101,7 @@ function getStats() {
 $(function () {
     getPayAndIncome();
     getStats();
+    $("input[name='options']").change(function () {
+        getStats();
+    })
 });

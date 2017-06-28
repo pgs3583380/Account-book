@@ -101,7 +101,7 @@ function searchInfo() {
                 } else {
                     $.each(list, function (index, item) {
                         var x = "";
-                        x = '<tr><td><input type="button" value="see" class="btn btn-info"  onclick="selectOne(' + item.id + ')"></td>'
+                        x = '<tr><td><input type="button" value="编辑" class="btn btn-info"  onclick="selectOne(' + item.id + ')"></td>'
                             + '<td>' + item.categoryName + '</td>'
                         if (item.moneyType == 1) {
                             x += '<td class="money-pay">' + item.money + '</td>'
@@ -110,7 +110,7 @@ function searchInfo() {
                         }
                         x += '<td>' + item.editTime + '</td>'
                             + '<td>' + item.remark + '</td>'
-                            + '<td><input type="button" value="delete" class="btn btn-warning" onclick="del(' + item.id + ')"></td>'
+                            + '<td><input type="button" value="删除" class="btn btn-danger" onclick="del(' + item.id + ')"></td>'
                             + '</tr>'
                         $("#info").append(x);
                     });

@@ -51,4 +51,9 @@ public class AcPaymentsServiceImpl implements AcPaymentsService {
     public List<AcPaymentsVo> selectForStats(AcPaymentsVo vo) {
         return acPaymentsMapper.selectForStats(vo);
     }
+
+    @Override
+    public int selectAllDays(Integer userId) {
+        return acPaymentsMapper.selectAllDays(userId);
+    }
 }
