@@ -5,6 +5,7 @@ import com.pgs.common.GlobalConstant;
 import com.pgs.common.Md5;
 import com.pgs.common.StringUtils;
 import com.pgs.model.AcUser;
+import com.pgs.service.AcPaymentsService;
 import com.pgs.service.AcUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,6 +30,8 @@ public class LoginController {
     public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private AcUserService acUserService;
+    @Autowired
+    private AcPaymentsService acPaymentsService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map<String, Object> login(AcUser user, HttpServletResponse response) throws IOException {
@@ -100,5 +104,22 @@ public class LoginController {
             return true;
         }
         return false;
+    }
+
+    @RequestMapping(value = "getUser", method = RequestMethod.GET)
+    public Map<String, Object> getUser(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        AcUser acUser = CookieUtil.getLoginUser(request);
+        int days = 0;
+        int flag = GlobalConstant.LOGIN_SUCCESS;
+        if (null != acUser && acUser.getId() != null) {
+            days = acPaymentsService.selectAllDays(acUser.getId());
+            map.put("name", acUser.getUsername());
+        } else {
+            flag = GlobalConstant.LOGIN_ERROR;
+        }
+        map.put("flag", flag);
+        map.put("days", days);
+        return map;
     }
 }

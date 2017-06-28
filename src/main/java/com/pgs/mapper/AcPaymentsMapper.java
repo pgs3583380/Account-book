@@ -31,9 +31,18 @@ public interface AcPaymentsMapper {
 
     /**
      * 获取某时间段的二级支出和收入
+     *
      * @param vo
      * @return
      */
     List<AcPaymentsVo> selectForStats(AcPaymentsVo vo);
+
+    /**
+     * 获取用户记账的天数
+     *
+     * @param userId
+     * @return
+     */
+    int selectAllDays(Integer userId);
 
 }
