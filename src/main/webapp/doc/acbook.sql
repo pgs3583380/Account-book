@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50544
 File Encoding         : 65001
 
-Date: 2017-06-22 16:59:12
+Date: 2017-06-28 10:09:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -104,16 +104,30 @@ CREATE TABLE `ac_payments` (
   `updatetime` datetime NOT NULL,
   `edittime` datetime NOT NULL COMMENT '用户输入的时间，用于统计一段时间内的收支情况',
   `category_type` int(11) NOT NULL COMMENT '明细类别',
+  `category_parent` int(11) DEFAULT NULL COMMENT '一级类别，冗余',
   `money_type` int(11) NOT NULL COMMENT '1收入，2支出',
   `remark` varchar(50) DEFAULT NULL COMMENT '备注',
   `money` decimal(10,2) DEFAULT NULL,
-  `category_parent` int(11) NOT  NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ac_payments
 -- ----------------------------
+INSERT INTO `ac_payments` VALUES ('2', '1', '2017-06-22 15:01:33', '2017-06-22 15:01:33', '2017-06-10 00:00:00', '200101', '2001', '2', '发工资啦', '5000.00');
+INSERT INTO `ac_payments` VALUES ('4', '1', '2017-06-23 09:33:16', '2017-06-27 12:43:55', '2017-06-23 09:33:02', '100401', '1004', '1', '吃的是鸡蛋', '4.00');
+INSERT INTO `ac_payments` VALUES ('5', '1', '2017-06-23 09:39:40', '2017-06-23 12:39:46', '2017-06-22 00:00:00', '100401', '1004', '1', 'sss', '24.00');
+INSERT INTO `ac_payments` VALUES ('6', '1', '2017-06-23 12:39:27', '2017-06-23 12:39:27', '2017-06-23 12:39:06', '100401', '1004', '1', '牛肉拉面', '10.00');
+INSERT INTO `ac_payments` VALUES ('8', '1', '2017-06-23 16:59:03', '2017-06-23 16:59:03', '2017-06-23 16:59:01', '100401', '1004', '1', '22', '2.00');
+INSERT INTO `ac_payments` VALUES ('9', '1', '2017-06-26 09:27:04', '2017-06-27 12:43:32', '2017-06-26 09:26:58', '100401', '1004', '1', '', '2.50');
+INSERT INTO `ac_payments` VALUES ('10', '1', '2017-06-26 09:41:49', '2017-06-26 09:41:49', '2017-06-25 00:00:00', '100401', '1004', '1', '', '39.00');
+INSERT INTO `ac_payments` VALUES ('12', '1', '2017-06-26 12:45:16', '2017-06-27 12:43:18', '2017-06-26 12:45:10', '100401', '1004', '1', '', '10.50');
+INSERT INTO `ac_payments` VALUES ('13', '1', '2017-06-27 10:10:58', '2017-06-27 10:10:58', '2017-06-27 10:10:56', '100401', '1004', '1', '', '4.00');
+INSERT INTO `ac_payments` VALUES ('14', '1', '2017-06-27 13:35:17', '2017-06-27 13:35:17', '2017-06-27 13:35:16', '100301', '1003', '1', '', '500.00');
+INSERT INTO `ac_payments` VALUES ('15', '1', '2017-06-27 13:35:32', '2017-06-27 13:35:32', '2017-06-27 13:35:32', '100501', '1005', '1', '', '300.00');
+INSERT INTO `ac_payments` VALUES ('16', '1', '2017-06-27 13:35:55', '2017-06-27 13:35:55', '2017-06-27 13:35:55', '100601', '1006', '1', '', '100.00');
+INSERT INTO `ac_payments` VALUES ('17', '1', '2017-06-27 13:36:23', '2017-06-27 13:36:23', '2017-06-27 13:36:21', '100801', '1008', '1', '', '500.00');
+INSERT INTO `ac_payments` VALUES ('18', '1', '2017-06-28 09:42:39', '2017-06-28 09:42:39', '2017-06-28 00:00:00', '200201', '2002', '2', '111', '500.00');
 
 -- ----------------------------
 -- Table structure for `ac_user`
@@ -127,9 +141,11 @@ CREATE TABLE `ac_user` (
   `updatetime` datetime NOT NULL,
   `lastlogintime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ac_user
 -- ----------------------------
 INSERT INTO `ac_user` VALUES ('1', 'pgs', 'E10ADC3949BA59ABBE56E057F20F883E', '2017-06-21 15:02:46', '2017-06-21 15:02:44', '2017-06-21 15:02:40');
+INSERT INTO `ac_user` VALUES ('2', 'chh', 'E10ADC3949BA59ABBE56E057F20F883E', '2017-06-26 16:19:42', '2017-06-26 16:19:45', '2017-06-26 16:19:47');
+INSERT INTO `ac_user` VALUES ('3', 'chg', 'E10ADC3949BA59ABBE56E057F20F883E', '2017-06-27 10:25:54', '2017-06-27 10:25:54', '2017-06-27 10:25:54');
