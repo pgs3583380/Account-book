@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -30,7 +31,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><strong><i class="icon fa"></i>小账本</strong></a>
+            <a class="navbar-brand" href="index.jsp"><strong><i class="icon fa"></i>小账本</strong></a>
 
             <div id="sideNav" href="">
                 <i class="fa fa-bars icon"></i>
@@ -62,7 +63,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i>首页</a>
+                    <a class="active-menu" href="index.jsp"><i class="fa fa-dashboard"></i>首页</a>
                 </li>
                 <li>
                     <a href="ui-elements.html"><i class="fa fa-desktop"></i> UI Elements</a>
@@ -222,6 +223,7 @@
                             </div>
                         </div>
                         <div class="panel-body" id="pie-1">
+                            <!--做成折线图，每月的支出-->
                             <canvas id="pie-chart-pay" class="chart"></canvas>
                         </div>
                     </div>
@@ -258,6 +260,6 @@
 <script type="text/javascript" src="assets/js/chart.min.js"></script>
 
 <script src="assets/js/custom-scripts.js?v=201706281614"></script>
-<script src="index.js"></script>
+<script src="index.js?v=201706282038"></script>
 </body>
 </html>
