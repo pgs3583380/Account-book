@@ -11,8 +11,16 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     <context:component-scan base-package="com.pgs.service"/>
     <!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
     <context:component-scan base-package="com.pgs.controller"/>
+
+    <!-- 开启MVC注解功能 ，为了使Controller中的参数注解起效，需要如下配置 -->
+    <mvc:annotation-driven/>
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/" p:suffix=".jsp"/>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
     <context:component-scan base-package="com.pgs.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
@@ -40,8 +48,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
             </list>
         </property>
     </bean>
-    <!-- 开启MVC注解功能 ，为了使Controller中的参数注解起效，需要如下配置 -->
-    <mvc:annotation-driven/>
     <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>

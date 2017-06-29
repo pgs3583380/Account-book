@@ -1,5 +1,6 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page isELIgnored="false" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,7 +19,6 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="/assets/js/Lightweight-Chart/cssCharts.css">
 </head>
-
 <body>
 <div id="wrapper">
     <jsp:include page="/common/header.jsp"/>
@@ -26,7 +26,7 @@
         <div class="header">
             <h1 class="page-header">
                 首页
-                <small id="username"></small>
+                <small>欢迎 ${num.name}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
@@ -42,7 +42,7 @@
                         <div class="panel panel-primary">
                             <div class="number">
                                 <h3>
-                                    <h3 id="all">0</h3>
+                                    <h3 id="all">${num.all}</h3>
                                     <small>总资产</small>
                                 </h3>
                             </div>
@@ -59,7 +59,7 @@
                         <div class="panel panel-primary">
                             <div class="number">
                                 <h3>
-                                    <h3 id="pay">0</h3>
+                                    <h3 id="pay">${num.pay}</h3>
                                     <small>支出</small>
                                 </h3>
                             </div>
@@ -76,7 +76,7 @@
                         <div class="panel panel-primary">
                             <div class="number">
                                 <h3>
-                                    <h3 id="income">0</h3>
+                                    <h3 id="income">${num.income}</h3>
                                     <small>收入</small>
                                 </h3>
                             </div>
@@ -93,7 +93,7 @@
                         <div class="panel panel-primary">
                             <div class="number">
                                 <h3>
-                                    <h3 id="days">0</h3>
+                                    <h3 id="days">${num.days}</h3>
                                     <small>记账天数</small>
                                 </h3>
                             </div>
@@ -141,16 +141,10 @@
     </div>
 </div>
 </div>
-<script src="/assets/js/jquery-1.10.2.js"></script>
-<!-- Bootstrap Js -->
-<script src="/assets/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Js -->
-<script src="/assets/js/jquery.metisMenu.js"></script>
-
-<script type="text/javascript" src="/assets/js/chart.min.js"></script>
-
-<script src="/assets/js/custom-scripts.js?v=201706291249"></script>
-<script src="index.js?v=201706291249"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#index").addClass("active-menu");
+    })
+</script>
 </body>
 </html>

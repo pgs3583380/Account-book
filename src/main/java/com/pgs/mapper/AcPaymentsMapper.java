@@ -2,13 +2,13 @@ package com.pgs.mapper;
 
 import com.pgs.model.AcPayments;
 import com.pgs.vo.AcPaymentsVo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface AcPaymentsMapper {
     int deleteByPrimaryKey(Integer id);
-
-    int insert(AcPayments record);
 
     int insertSelective(AcPayments record);
 

@@ -28,7 +28,7 @@ public class AcCategoryController {
      *
      * @return
      */
-    @RequestMapping(value = "getlevel", method = RequestMethod.GET)
+        @RequestMapping(value = "getlevel", method = RequestMethod.GET)
     public Map<String, Object> selectByLevel1(int level) {
         Map<String, Object> map = new HashMap<>();
         List<AcCategory> list = acCategoryService.selectByLevel(level);
