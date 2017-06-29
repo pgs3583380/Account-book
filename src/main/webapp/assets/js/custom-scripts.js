@@ -24,52 +24,7 @@
             },
             initialization: function () {
                 mainApp.initFunction();
-                mainApp.getPayAndIncome();
-                mainApp.getUser();
             },
-            getPayAndIncome: function () {
-                $.ajax({
-                    url: "/payment/getPayAndIncome.do",
-                    type: "post",
-                    dataType: "json",
-                    success: function (data) {
-                        var flag = data.flag;
-                        if (flag == 2) {
-                            alert(data.msg);
-                        } else {
-                            var list = data.list;
-                            var pay = 0;
-                            var income = 0;
-                            $.each(list, function (index, item) {
-                                if (item.moneyType == 1) {
-                                    pay = item.money;
-                                } else if (item.moneyType == 2) {
-                                    income = item.money;
-                                }
-                            })
-                            $("#income").html(income);
-                            $("#pay").html(pay);
-                            $("#all").html(income - pay);
-                        }
-                    }
-                });
-            },
-            getUser: function () {
-                $.ajax({
-                    url: "/getUser.do",
-                    type: "get",
-                    dataType: "json",
-                    success: function (data) {
-                        var flag = data.flag;
-                        if (flag == 0) {
-                            window.location.href = "login.html"
-                        } else {
-                            $("#days").html(data.days);
-                            $("#username").html("欢迎  " + data.name);
-                        }
-                    }
-                })
-            }
         }
         // Initializing ///
 

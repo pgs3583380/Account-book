@@ -3,7 +3,6 @@ package com.pgs.controller;
 import com.pgs.common.CookieUtil;
 import com.pgs.common.GlobalConstant;
 import com.pgs.common.StringUtils;
-import com.pgs.controller.Base.BaseController;
 import com.pgs.model.AcPayments;
 import com.pgs.model.AcUser;
 import com.pgs.service.AcPaymentsService;
@@ -11,11 +10,14 @@ import com.pgs.vo.AcPaymentsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -23,14 +25,77 @@ import java.util.*;
  * Created by x on 2017/6/21.
  * 流水信息
  */
-@RestController
+@Controller
 @RequestMapping("/payment")
 public class AcPaymentsController {
     private static Logger logger = LoggerFactory.getLogger(AcPaymentsController.class);
     @Autowired
     private AcPaymentsService acPaymentsService;
 
+    @RequestMapping(value = "/index")
+    public String getIndex(HttpServletRequest request, Model model) {
+        Map<String, Object> map = new HashMap<>();
+        AcUser acUser = CookieUtil.getLoginUser(request);
+        if (null == acUser) {
+            return "redirect:/";
+        }
+
+        getMoney(map, acUser);
+        getUseDays(map, acUser);
+        model.addAttribute("num", map);
+        return "/payment/index";
+    }
+
+    /**
+     * 获取用户总资产，总支出，总收入
+     *
+     * @param map
+     * @param acUser
+     */
+    private void getMoney(Map<String, Object> map, AcUser acUser) {
+        AcPaymentsVo vo = new AcPaymentsVo();
+        vo.setUserid(acUser.getId());
+        List<AcPaymentsVo> list = acPaymentsService.selectPayAndIncome(vo);
+        BigDecimal pay = new BigDecimal(0);
+        BigDecimal income = new BigDecimal(0);
+        for (AcPaymentsVo aVo : list) {
+            if (aVo.getMoneyType() == 1) {
+                pay = aVo.getMoney();
+            }
+            if (aVo.getMoneyType() == 2) {
+                income = aVo.getMoney();
+            }
+        }
+        BigDecimal all = income.subtract(pay);
+        map.put("pay", pay);
+        map.put("all", all);
+        map.put("income", income);
+    }
+
+    /**
+     * 获取用户使用账本的天数
+     *
+     * @param map
+     * @param acUser
+     */
+    public void getUseDays(Map<String, Object> map, AcUser acUser) {
+        int days = acPaymentsService.selectAllDays(acUser.getId());
+        map.put("days", days);
+        map.put("name", acUser.getUsername());
+    }
+
+    @RequestMapping(value = "/charge", method = RequestMethod.GET)
+    public String toCharge() {
+        return "/payment/charge";
+    }
+
+    @RequestMapping(value = "/capitalflow", method = RequestMethod.GET)
+    public String toCapitalFlow() {
+        return "/payment/capitalflow";
+    }
+
     @RequestMapping(value = "/saveOrupdate", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> saveOrupdate(AcPayments acPayments, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         int flag = GlobalConstant.LOGIN_SUCCESS;
@@ -40,7 +105,6 @@ public class AcPaymentsController {
         if (null == acUser) {
             flag = GlobalConstant.LOGIN_ERROR;
         } else {
-            logger.info("remark:{}", acPayments.getRemark());
             if (null != acPayments) {
                 int count;
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -134,37 +198,6 @@ public class AcPaymentsController {
         }
         map.put("flag", flag);
         map.put("msg", msg);
-        return map;
-    }
-
-    /**
-     * 获取某段时间支出和收入
-     *
-     * @param vo
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "getPayAndIncome", method = RequestMethod.POST)
-    public Map<String, Object> getPayAndIncome(AcPaymentsVo vo, HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>();
-        AcUser acUser = CookieUtil.getLoginUser(request);
-        int flag = GlobalConstant.LOGIN_SUCCESS;
-        List<AcPaymentsVo> list = new ArrayList<>();
-        String msg = "";
-        if (null == acUser) {
-            flag = GlobalConstant.LOGIN_ERROR;
-        } else {
-            if (vo != null) {
-                vo.setUserid(acUser.getId());
-                list = acPaymentsService.selectPayAndIncome(vo);
-            } else {
-                flag = GlobalConstant.NO_MESSAGE;
-                msg = GlobalConstant.MSG_NO_MESSAGE;
-            }
-        }
-        map.put("flag", flag);
-        map.put("msg", msg);
-        map.put("list", list);
         return map;
     }
 

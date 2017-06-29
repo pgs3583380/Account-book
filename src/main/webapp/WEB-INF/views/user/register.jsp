@@ -1,5 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="utf-8">
 <head>
@@ -63,65 +65,40 @@
             background-color: rgba(255, 255, 255, 0.1);
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
             border: 2px solid rgb(161, 194, 61);
-            --background: url(img/index5.jpg);
+            --background: url(../../../img/index5.jpg);
             background-position: top center;
 
         }
     </style>
     <script type="text/javascript">
-        function register() {
+        function check() {
             var username = $("#username").val();
             var password = $("#password").val();
             var repassword = $("#repassword").val();
             if (isEmpty(username) || isEmpty(password) || isEmpty(repassword)) {
                 alert("用户名或者密码不能为空");
-                return;
+                return false;
             }
             if (password != repassword) {
                 alert("两次密码输入不一致");
-                return;
+                return false;
             }
-            $.ajax({
-                url: "/register.do",
-                type: "post",
-                dataType: "json",
-                data: {
-                    "username": username,
-                    "password": password
-                },
-                success: function (data) {
-                    var flag = data.flag;
-                    alert(data.msg);
-                    if (flag == 8) {
-                        window.location.href = "login.html";
-                    }
-                }
-            })
+            return true;
         }
-        function login() {
-            window.location.href = "login.html";
-        }
-        $(function () {
-            $("#repassword").keydown(function (e) {
-                if (e.keyCode == 13) {
-                    register();
-                }
-            })
-        })
     </script>
 </head>
 <body>
-<div class="formcnt center-block" style="">
-    <form role="form">
+<div class="formcnt center-block">
+    <form role="form" action="/toregister" method="post" onsubmit="return check()" id="re">
         <div class="form-back">
             <div class="form-group">
                 <label for="username">用户名</label>
-                <input type="text" class="form-control input" id="username" placeholder="用户名">
+                <input type="text" class="form-control input" id="username" name="username" placeholder="用户名">
                 <div class="clear"></div>
             </div>
             <div class="form-group">
                 <label for="password">新密码</label>
-                <input type="password" class="form-control input" id="password" placeholder="新密码">
+                <input type="password" class="form-control input" id="password" name="password" placeholder="新密码">
                 <div class="clear"></div>
             </div>
             <div class="form-group">
@@ -130,9 +107,9 @@
                 <div class="clear"></div>
             </div>
             <div>
-                <label></label>
-                <button type="button" class="btn btn-warning" onclick="register()">注册</button>
-                <button type="button" class="btn btn-warning" onclick="login()">登录</button>
+                <label><%=(String) session.getAttribute("msg") == null ? "" : (String) session.getAttribute("msg")%></label>
+                <button type="submit" class="btn btn-warning">注册</button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/'">登录</button>
             </div>
         </div>
     </form>

@@ -1,12 +1,14 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page isELIgnored="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="utf-8">
 <head>
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         .form-control {
             width: 76%;
@@ -43,7 +45,7 @@
         }
 
         body {
-            background-image: url("img/index5.jpg");
+            background-image: url("../../../img/index5.jpg");
             background-size: 100%;
             background-position: top center;
             background-repeat: no-repeat;
@@ -63,68 +65,42 @@
             background-color: rgba(255, 255, 255, 0.1);
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
             border: 2px solid rgb(161, 194, 61);
-            --background: url(img/index5.jpg);
+            --background: url(../../../img/index5.jpg);
             background-position: top center;
 
         }
     </style>
     <script type="text/javascript">
-        function login() {
+        function check() {
             var username = $("#username").val();
             var password = $("#password").val();
             if (isEmpty(username) || isEmpty(password)) {
-                alert("用户名或者密码不能为空");
-                return;
+                alert("用户名或密码不能为空")
+                return false;
             }
-            //check用户名是否存在
-            $.ajax({
-                url: "/login.do",
-                type: "post",
-                dataType: "json",
-                data: {
-                    "username": username,
-                    "password": password
-                },
-                success: function (data) {
-                    var flag = data.flag;
-                    if (flag == 1) {
-                        window.location.href = "index.jsp";
-                    } else {
-                        alert(data.msg);
-                    }
-                }
-            })
+            return true;
         }
-        function register() {
-            window.location.href = "register.html"
-        }
-        $(function () {
-            $("#password").keydown(function (e) {
-                if (e.keyCode == 13) {
-                    login();
-                }
-            })
-        })
     </script>
 </head>
 <body>
 <div class="formcnt center-block">
-    <form role="form">
+    <form role="form" action="/login" method="post" onsubmit="return check()">
         <div class="form-back">
             <div class="form-group">
                 <label for="username">用户名</label>
-                <input type="text" class="form-control input" id="username" placeholder="用户名">
+                <input type="text" class="form-control input" id="username" name="username" placeholder="用户名">
                 <div class="clear"></div>
             </div>
             <div class="form-group">
                 <label for="password">密码</label>
-                <input type="password" class="form-control input" id="password" placeholder="密码">
+                <input type="password" class="form-control input" id="password" name="password" placeholder="密码">
                 <div class="clear"></div>
             </div>
             <div>
-                <label></label>
-                <button type="button" class="btn btn-warning" onclick="login()">登录</button>
-                <button type="button" class="btn btn-warning" onclick="register()">注册</button>
+                <label><%=(String) session.getAttribute("msg") == null ? "" : (String) session.getAttribute("msg")%>
+                </label>
+                <button type="submit" class="btn btn-warning">登录</button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/register'">注册</button>
             </div>
         </div>
     </form>

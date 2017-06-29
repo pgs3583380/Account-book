@@ -51,7 +51,7 @@ function getlevel() {
     });
 }
 function reback() {
-    window.location.href = "/login.html";
+    window.location.href = "/WEB-INF/user/login.jsp";
 }
 function del(id) {
     if (!confirm("确定删除当前流水信息吗？")) {
@@ -196,7 +196,7 @@ function update() {
         success: function (data) {
             var flag = data.flag;
             if (flag == 0) {
-                window.location.href = "/login.html"
+                window.location.href = "/WEB-INF/user/login.jsp"
             } else {
                 alert(data.msg);
                 if (data.editCode == 4) {

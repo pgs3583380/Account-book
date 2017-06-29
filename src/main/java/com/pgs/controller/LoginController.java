@@ -7,15 +7,21 @@ import com.pgs.common.StringUtils;
 import com.pgs.model.AcUser;
 import com.pgs.service.AcPaymentsService;
 import com.pgs.service.AcUserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +31,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/6/21.
  */
-@RestController
+@Controller
 public class LoginController {
     public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
@@ -33,46 +39,46 @@ public class LoginController {
     @Autowired
     private AcPaymentsService acPaymentsService;
 
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String showLogin() {
+        return "/user/login";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String showRegister() {
+        return "/user/register";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> login(AcUser user, HttpServletResponse response) throws IOException {
-        String msg = "";
-        Map<String, Object> map = new HashMap<>();
-        int flag = GlobalConstant.LOGIN_ERROR;
+    public String login(AcUser user, HttpServletResponse response, HttpSession session) throws IOException {
         if (null == user || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
-            msg = GlobalConstant.NO_PASSWORDANDUSER;
-        } else {
-            AcUser acUser = acUserService.selectUserByName(user.getUsername());
-            if (null != acUser) {
-                if (Md5.md5Digest(user.getPassword()).equals(acUser.getPassword())) {
-                    CookieUtil.setLoginUser(response, acUser);
-                    flag = GlobalConstant.LOGIN_SUCCESS;
-                } else {
-                    msg = GlobalConstant.ERROR_PASSWORD;
-                }
-            } else {
-                msg = GlobalConstant.NO_USER;
+            session.setAttribute("msg", "用户名或密码不能为空");
+            return "redirect:/";
+        }
+        AcUser acUser = acUserService.selectUserByName(user.getUsername());
+        if (null != acUser) {
+            if (Md5.md5Digest(user.getPassword()).equals(acUser.getPassword())) {
+                CookieUtil.setLoginUser(response, acUser);
+                return "redirect:/payment/index";
             }
         }
-        map.put("flag", flag);
-        map.put("msg", msg);
-        return map;
+        session.setAttribute("msg", "用户名密码错误");
+        session.setMaxInactiveInterval(2);
+        return "redirect:/";
     }
 
     /**
      * 注册
      */
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public Map<String, Object> register(AcUser user) {
+    @RequestMapping(value = "/toregister", method = RequestMethod.POST)
+    public String register(AcUser user, HttpSession session) {
         String msg = "";
-        int flag;
-        Map<String, Object> map = new HashMap<>();
         if (null == user || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
             msg = GlobalConstant.MSG_NO_MESSAGE;
-            flag = GlobalConstant.NO_MESSAGE;
         } else {
             if (!checkValidName(user.getUsername())) {
                 msg = GlobalConstant.MSG_NO_VALIAD_NAME;
-                flag = GlobalConstant.NO_VALIAD_NAME;
             } else {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String now = sdf.format(new Date());
@@ -83,16 +89,14 @@ public class LoginController {
                 int count = acUserService.insertSelective(user);
                 if (count > 0) {
                     msg = GlobalConstant.MSG_REGISTER_SUCCESS;
-                    flag = GlobalConstant.REGISTER_SUCCESS;
                 } else {
                     msg = GlobalConstant.MSG_REGISTER_FAIL;
-                    flag = GlobalConstant.REGISTER_FAIL;
                 }
             }
         }
-        map.put("msg", msg);
-        map.put("flag", flag);
-        return map;
+        session.setAttribute("msg", msg);
+        session.setMaxInactiveInterval(2);
+        return "redirect:/register";
     }
 
     /**
@@ -106,20 +110,9 @@ public class LoginController {
         return false;
     }
 
-    @RequestMapping(value = "getUser", method = RequestMethod.GET)
-    public Map<String, Object> getUser(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>();
-        AcUser acUser = CookieUtil.getLoginUser(request);
-        int days = 0;
-        int flag = GlobalConstant.LOGIN_SUCCESS;
-        if (null != acUser && acUser.getId() != null) {
-            days = acPaymentsService.selectAllDays(acUser.getId());
-            map.put("name", acUser.getUsername());
-        } else {
-            flag = GlobalConstant.LOGIN_ERROR;
-        }
-        map.put("flag", flag);
-        map.put("days", days);
-        return map;
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletResponse response) {
+        CookieUtil.removeCookie(response, CookieUtil.USER_INFO, "/");
+        return "redirect:/";
     }
 }

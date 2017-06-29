@@ -104,7 +104,7 @@
                 success: function (data) {
                     var flag = data.flag;
                     if (flag == 0) {
-                        window.location.href = "/login.html"
+                        window.location.href = "/WEB-INF/user/login.jsp"
                     } else {
                         alert(data.msg);
                         if (data.editCode == 4) {
