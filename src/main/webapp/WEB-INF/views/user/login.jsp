@@ -1,0 +1,96 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head>
+    <script type="text/javascript" src="../../js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../../js/common.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../js/bootstrap/css/bootstrap.min.css"/>
+    <style type="text/css">
+        .form-control {
+            width: 76%;
+        }
+
+        label {
+            width: 20%;
+            float: left;
+            line-height: 34px;
+            color: white;
+        }
+
+        .input {
+            float: left;
+            margin-left: 4%;
+            background: none;
+            color: white;
+            border: 1px solid #fff
+
+        }
+
+        .input:focus {
+            border: 1px solid white;
+            box-shadow: 0 0 6px white;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .form-back {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        body {
+            background-image: url("../../img/index5.jpg");
+            background-size: 100%;
+            background-position: top center;
+            background-repeat: no-repeat;
+
+        }
+
+        button.btn {
+            padding: 6px 30px;
+            margin-left: 4%;
+        }
+
+        .formcnt {
+            padding: 50px 0px;
+            width: 500px;
+            margin-top: 15%;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgb(161, 194, 61);
+            --background: url(../../img/index5.jpg);
+            background-position: top center;
+
+        }
+    </style>
+</head>
+<body>
+<div class="formcnt center-block">
+    <form role="form" action="/login" method="post">
+        <div class="form-back">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" class="form-control input" id="username" name="username" placeholder="用户名">
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" class="form-control input" id="password" name="password" placeholder="密码">
+                <div class="clear"></div>
+            </div>
+            <div>
+                <label></label>
+                <button type="submit" class="btn btn-warning">登录</button>
+                <button type="button" class="btn btn-warning" onclick="register()">注册</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

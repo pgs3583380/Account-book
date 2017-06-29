@@ -1,12 +1,13 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="utf-8">
 <head>
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css"/>
     <style type="text/css">
         .form-control {
             width: 76%;
@@ -43,7 +44,7 @@
         }
 
         body {
-            background-image: url("img/index5.jpg");
+            background-image: url("/img/index5.jpg");
             background-size: 100%;
             background-position: top center;
             background-repeat: no-repeat;
@@ -63,22 +64,26 @@
             background-color: rgba(255, 255, 255, 0.1);
             box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.3);
             border: 2px solid rgb(161, 194, 61);
-            --background: url(img/index5.jpg);
+            --background: url(../../img/index5.jpg);
             background-position: top center;
 
         }
     </style>
     <script type="text/javascript">
-        function login() {
+        function register() {
             var username = $("#username").val();
             var password = $("#password").val();
-            if (isEmpty(username) || isEmpty(password)) {
+            var repassword = $("#repassword").val();
+            if (isEmpty(username) || isEmpty(password) || isEmpty(repassword)) {
                 alert("用户名或者密码不能为空");
                 return;
             }
-            //check用户名是否存在
+            if (password != repassword) {
+                alert("两次密码输入不一致");
+                return;
+            }
             $.ajax({
-                url: "/login.do",
+                url: "/register.do",
                 type: "post",
                 dataType: "json",
                 data: {
@@ -87,28 +92,27 @@
                 },
                 success: function (data) {
                     var flag = data.flag;
-                    if (flag == 1) {
-                        window.location.href = "index.html";
-                    } else {
-                        alert(data.msg);
+                    alert(data.msg);
+                    if (flag == 8) {
+                        window.location.href = "login.jsp";
                     }
                 }
             })
         }
-        function register() {
-            window.location.href = "register.html"
+        function login() {
+            window.location.href = "login.jsp";
         }
         $(function () {
-            $("#password").keydown(function (e) {
+            $("#repassword").keydown(function (e) {
                 if (e.keyCode == 13) {
-                    login();
+                    register();
                 }
             })
         })
     </script>
 </head>
 <body>
-<div class="formcnt center-block">
+<div class="formcnt center-block" style="">
     <form role="form">
         <div class="form-back">
             <div class="form-group">
@@ -117,14 +121,19 @@
                 <div class="clear"></div>
             </div>
             <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" class="form-control input" id="password" placeholder="密码">
+                <label for="password">新密码</label>
+                <input type="password" class="form-control input" id="password" placeholder="新密码">
+                <div class="clear"></div>
+            </div>
+            <div class="form-group">
+                <label for="repassword">再输入一次</label>
+                <input type="password" class="form-control input" id="repassword" placeholder="再输入一次新密码">
                 <div class="clear"></div>
             </div>
             <div>
                 <label></label>
-                <button type="button" class="btn btn-warning" onclick="login()">登录</button>
                 <button type="button" class="btn btn-warning" onclick="register()">注册</button>
+                <button type="button" class="btn btn-warning" onclick="login()">登录</button>
             </div>
         </div>
     </form>
