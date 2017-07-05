@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -56,5 +58,10 @@ public abstract class StringUtils {
         } catch (UnsupportedEncodingException e) {
             return str;
         }
+    }
+
+    public static String getYear() {
+        Calendar c = Calendar.getInstance();
+        return String.valueOf(c.get(Calendar.YEAR));
     }
 }
