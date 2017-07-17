@@ -159,7 +159,6 @@
             </if>
         </where>
         ORDER BY editTime DESC
-        limit 10
     </select>
     <select id="selectPayAndIncome" resultMap="BaseResultMapVo" parameterType="com.pgs.vo.AcPaymentsVo">
         SELECT

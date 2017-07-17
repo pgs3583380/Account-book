@@ -19,6 +19,7 @@ import java.util.Map;
  * 资金类别
  */
 @RestController
+@RequestMapping("/category")
 public class AcCategoryController {
     @Autowired
     private AcCategoryService acCategoryService;

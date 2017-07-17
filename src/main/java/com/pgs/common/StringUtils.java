@@ -24,16 +24,21 @@ public abstract class StringUtils {
         return str == null || "".equals(str);
     }
 
-    public static void JsonWrite(HttpServletResponse response, Object o) throws IOException {
+    public static void JsonWrite(HttpServletResponse response, Object o) {
         Gson gson = new Gson();
         String json = gson.toJson(o);
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Cache-Control", "no-cache");
-        PrintWriter out = response.getWriter();
-        out.write(json);
-        out.flush();
-        out.close();
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            out.write(json);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

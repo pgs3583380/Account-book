@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -141,30 +142,26 @@ public class AcPaymentsController {
         return map;
     }
 
-    @RequestMapping(value = "selectByCondition", method = RequestMethod.POST)
-    public Map<String, Object> selectByCondition(AcPaymentsVo acPaymentsVo, HttpServletRequest request) {
+    @RequestMapping(value = "selectByCondition", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> selectByCondition(AcPaymentsVo acPaymentsVo, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = new HashMap<>();
-        String msg = "";
         AcUser acUser = CookieUtil.getLoginUser(request);
-        int flag = GlobalConstant.LOGIN_SUCCESS;
-        if (null == acUser) {
-            flag = GlobalConstant.LOGIN_ERROR;
-        } else {
+        List<AcPaymentsVo> list = new ArrayList<>();
+        ModelAndView modelAndView = new ModelAndView();
+        if (null != acUser) {
             if (acPaymentsVo == null) {
-                flag = GlobalConstant.NO_MESSAGE;
-                msg = GlobalConstant.MSG_NO_MESSAGE;
-            } else {
-                acPaymentsVo.setUserid(acUser.getId());
-                List<AcPaymentsVo> list = acPaymentsService.selectByCondition(acPaymentsVo);
-                map.put("list", list);
+                acPaymentsVo = new AcPaymentsVo();
             }
+            acPaymentsVo.setUserid(acUser.getId());
+            list = acPaymentsService.selectByCondition(acPaymentsVo);
         }
-        map.put("flag", flag);
-        map.put("msg", msg);
+        map.put("aaData", list);
         return map;
     }
 
     @RequestMapping(value = "del", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> del(Integer id) {
         Map<String, Object> map = new HashMap<>();
         int flag;
@@ -188,6 +185,7 @@ public class AcPaymentsController {
     }
 
     @RequestMapping(value = "selectOne", method = RequestMethod.GET)
+    @ResponseBody
     public Map<String, Object> selectOne(Integer id) {
         Map<String, Object> map = new HashMap<>();
         int flag = GlobalConstant.NORMAL;
