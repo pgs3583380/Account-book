@@ -12,11 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -138,30 +142,26 @@ public class AcPaymentsController {
         return map;
     }
 
-    @RequestMapping(value = "selectByCondition", method = RequestMethod.POST)
-    public Map<String, Object> selectByCondition(AcPaymentsVo acPaymentsVo, HttpServletRequest request) {
+    @RequestMapping(value = "selectByCondition", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> selectByCondition(AcPaymentsVo acPaymentsVo, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = new HashMap<>();
-        String msg = "";
         AcUser acUser = CookieUtil.getLoginUser(request);
-        int flag = GlobalConstant.LOGIN_SUCCESS;
-        if (null == acUser) {
-            flag = GlobalConstant.LOGIN_ERROR;
-        } else {
+        List<AcPaymentsVo> list = new ArrayList<>();
+        ModelAndView modelAndView = new ModelAndView();
+        if (null != acUser) {
             if (acPaymentsVo == null) {
-                flag = GlobalConstant.NO_MESSAGE;
-                msg = GlobalConstant.MSG_NO_MESSAGE;
-            } else {
-                acPaymentsVo.setUserid(acUser.getId());
-                List<AcPaymentsVo> list = acPaymentsService.selectByCondition(acPaymentsVo);
-                map.put("list", list);
+                acPaymentsVo = new AcPaymentsVo();
             }
+            acPaymentsVo.setUserid(acUser.getId());
+            list = acPaymentsService.selectByCondition(acPaymentsVo);
         }
-        map.put("flag", flag);
-        map.put("msg", msg);
+        map.put("aaData", list);
         return map;
     }
 
     @RequestMapping(value = "del", method = RequestMethod.POST)
+    @ResponseBody
     public Map<String, Object> del(Integer id) {
         Map<String, Object> map = new HashMap<>();
         int flag;
@@ -185,6 +185,7 @@ public class AcPaymentsController {
     }
 
     @RequestMapping(value = "selectOne", method = RequestMethod.GET)
+    @ResponseBody
     public Map<String, Object> selectOne(Integer id) {
         Map<String, Object> map = new HashMap<>();
         int flag = GlobalConstant.NORMAL;
@@ -230,5 +231,32 @@ public class AcPaymentsController {
         map.put("msg", msg);
         map.put("list", list);
         return map;
+    }
+
+    @RequestMapping(value = "/getInfo/{moneyType}", method = RequestMethod.GET)
+    @ResponseBody
+    public void getYearInfo(@PathVariable int moneyType, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        AcUser acUser = CookieUtil.getLoginUser(request);
+        if (acUser != null) {
+
+        }
+        AcPaymentsVo vo = new AcPaymentsVo();
+        vo.setMoneyType(moneyType);
+        vo.setUserid(acUser.getId());
+        vo.setYear(StringUtils.getYear());
+        List<AcPaymentsVo> list = acPaymentsService.selectPayAndIncomeYear(vo);
+        List<String> moneys = new ArrayList<>();
+        for (int i = 1; i < 13; i++) {
+            String money = "0";
+            for (AcPaymentsVo v : list) {
+                if (v.getMonths() == i) {
+                    money = v.getMoneys();
+                    break;
+                }
+            }
+            moneys.add(money);
+        }
+
+        StringUtils.JsonWrite(response, moneys);
     }
 }

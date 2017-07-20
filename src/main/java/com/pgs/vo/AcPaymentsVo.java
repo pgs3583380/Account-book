@@ -13,6 +13,12 @@ public class AcPaymentsVo extends AcPayments {
 
     private String categoryName;
 
+    private String Year;
+
+    private int months;
+
+    private String moneys;
+
     public String getStartTime() {
         return startTime;
     }
@@ -35,5 +41,29 @@ public class AcPaymentsVo extends AcPayments {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getYear() {
+        return Year;
+    }
+
+    public void setYear(String year) {
+        Year = year;
+    }
+
+    public int getMonths() {
+        return months;
+    }
+
+    public void setMonths(int months) {
+        this.months = months;
+    }
+
+    public String getMoneys() {
+        return moneys;
+    }
+
+    public void setMoneys(String moneys) {
+        this.moneys = moneys;
     }
 }

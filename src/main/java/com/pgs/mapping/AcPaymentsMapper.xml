@@ -15,6 +15,9 @@
     </resultMap>
     <resultMap id="BaseResultMapVo" type="com.pgs.vo.AcPaymentsVo" extends="BaseResultMap">
         <result column="categoryName" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="months" property="months" jdbcType="INTEGER"/>
+        <result column="moneys" property="moneys" jdbcType="VARCHAR"/>
+
     </resultMap>
     <sql id="Base_Column_List">
     id, userid, createtime, updatetime, editTime, category_type, money_type, remark,money,category_parent
@@ -156,7 +159,6 @@
             </if>
         </where>
         ORDER BY editTime DESC
-        limit 10
     </select>
     <select id="selectPayAndIncome" resultMap="BaseResultMapVo" parameterType="com.pgs.vo.AcPaymentsVo">
         SELECT
@@ -207,5 +209,15 @@
                     FROM ac_payments
                     WHERE userid=#{userId,jdbcType=INTEGER}
                     GROUP BY SUBSTR(edittime,1,10)) a
+    </select>
+    <select id="selectPayAndIncomeYear" resultMap="BaseResultMapVo" parameterType="com.pgs.vo.AcPaymentsVo">
+        select
+         DATE_FORMAT(edittime,'%c') months
+        ,SUM(money) moneys FROM ac_payments
+        WHERE
+         userid=#{userid,jdbcType=VARCHAR}
+        AND DATE_FORMAT(edittime,'%Y')=#{year,jdbcType=VARCHAR}
+        AND money_type=#{moneyType,jdbcType=INTEGER}
+        GROUP BY months
     </select>
 </mapper>

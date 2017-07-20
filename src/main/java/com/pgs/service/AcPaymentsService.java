@@ -45,4 +45,11 @@ public interface AcPaymentsService {
      * @return
      */
     int selectAllDays(Integer userId);
+
+    /**
+     * 获取某年用户每月支出或收入的数据
+     *
+     * @return
+     */
+    List<AcPaymentsVo> selectPayAndIncomeYear(AcPaymentsVo vo);
 }

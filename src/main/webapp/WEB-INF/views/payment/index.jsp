@@ -18,6 +18,7 @@
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="/assets/js/Lightweight-Chart/cssCharts.css">
+    <script type="text/javascript" src="/assets/js/echarts.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -111,11 +112,10 @@
                     <div class="panel panel-default chartJs">
                         <div class="panel-heading">
                             <div class="card-title">
-                                <div class="title">收入</div>
+                                <div class="title">支出</div>
                             </div>
                         </div>
-                        <div class="panel-body" id="pie-1">
-                            <canvas id="pie-chart-pay" class="chart"></canvas>
+                        <div class="panel-body" id="pie-1" style="width: 600px;height:400px;">
                         </div>
                     </div>
                 </div>
@@ -123,11 +123,11 @@
                     <div class="panel panel-default chartJs">
                         <div class="panel-heading">
                             <div class="card-title">
-                                <div class="title">支出</div>
+                                <div class="title">收入</div>
                             </div>
                         </div>
-                        <div class="panel-body" id="pie-2">
-                            <canvas id="bar-chart-income" class="chart"></canvas>
+                        <div class="panel-body" id="pie-2" style="width: 600px;height:400px;">
+
                         </div>
                     </div>
                 </div>
@@ -141,10 +141,73 @@
     </div>
 </div>
 </div>
+${num.list}
 <script type="text/javascript">
     $(function () {
         $("#index").addClass("active-menu");
-    })
+        var pay = echarts.init(document.getElementById('pie-1'));
+        $.get('/payment/getInfo/1').done(function (data) {
+            pay.hideLoading();
+            pay.setOption({
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: '支出',
+                        type: 'line',
+                        stack: '总量',
+                        data: eval(data)
+                    }
+                ]
+            })
+        })
+        var income = echarts.init(document.getElementById('pie-2'));
+        $.get('/payment/getInfo/2').done(function (data) {
+            income.hideLoading();
+            income.setOption({
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: '收入',
+                        type: 'line',
+                        stack: '总量',
+                        data: eval(data)
+                    }
+                ]
+            })
+        })
+    });
 </script>
 </body>
 </html>

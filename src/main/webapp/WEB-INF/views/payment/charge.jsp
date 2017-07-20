@@ -174,7 +174,7 @@
     }
     function getlevel2() {
         $.ajax({
-            url: "/getlevel?aa=" + new Date(),
+            url: "/category/getlevel?aa=" + new Date(),
             type: "get",
             dataType: "json",
             data: {
@@ -187,7 +187,7 @@
     }
     function getlevel() {
         $.ajax({
-            url: "/getlevel?aa=" + new Date(),
+            url: "/category/getlevel?aa=" + new Date(),
             type: "get",
             dataType: "json",
             data: {

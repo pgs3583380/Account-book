@@ -39,7 +39,11 @@ public class LoginController {
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showLogin() {
+    public String showLogin(HttpServletRequest request) {
+        AcUser acUser = CookieUtil.getLoginUser(request);
+        if (acUser != null) {
+            return "redirect:/payment/index";
+        }
         return "/user/login";
     }
 

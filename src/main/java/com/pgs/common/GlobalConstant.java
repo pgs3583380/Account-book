@@ -31,6 +31,10 @@ public class GlobalConstant {
     public static int REGISTER_FAIL = 9;
 
     public static int NO_VALIAD_NAME = 10;
+    //支出状态
+    public static int PAY = 1;
+    //收入状态
+    public static int INCOME = 2;
 
     public static String NO_USER = "用户不存在";
 
