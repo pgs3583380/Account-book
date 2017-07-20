@@ -36,8 +36,6 @@ public class LoginController {
     public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private AcUserService acUserService;
-    @Autowired
-    private AcPaymentsService acPaymentsService;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

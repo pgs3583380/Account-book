@@ -86,7 +86,11 @@
 <script type="text/javascript">
     $(function () {
         $("#capitalflow").addClass("active-menu");
-             $('#dataTables').dataTable();
+        $('#dataTables').dataTable({
+            columns:[
+                {"a":"b"}
+            ]
+        });
     })
 </script>
 </body>
