@@ -75,7 +75,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/toregister", method = RequestMethod.POST)
     public String register(AcUser user, HttpSession session) {
-        String msg = "";
+        String msg;
         if (null == user || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
             msg = GlobalConstant.MSG_NO_MESSAGE;
         } else {
@@ -104,12 +104,9 @@ public class LoginController {
     /**
      * 判断用户名是否重复
      */
-    public boolean checkValidName(String userName) {
+    private boolean checkValidName(String userName) {
         AcUser user = acUserService.selectUserByName(userName);
-        if (null == user) {
-            return true;
-        }
-        return false;
+        return null == user;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

@@ -23,32 +23,21 @@ public interface AcPaymentsMapper {
 
     /**
      * 获取某时间段的总支出和总支出
-     *
-     * @param vo
-     * @return
      */
     List<AcPaymentsVo> selectPayAndIncome(AcPaymentsVo vo);
 
     /**
      * 获取某时间段的二级支出和收入
-     *
-     * @param vo
-     * @return
      */
     List<AcPaymentsVo> selectForStats(AcPaymentsVo vo);
 
     /**
      * 获取用户记账的天数
-     *
-     * @param userId
-     * @return
      */
     int selectAllDays(Integer userId);
 
     /**
      * 获取某年用户每月支出或收入的数据
-     *
-     * @return
      */
     List<AcPaymentsVo> selectPayAndIncomeYear(AcPaymentsVo vo);
 

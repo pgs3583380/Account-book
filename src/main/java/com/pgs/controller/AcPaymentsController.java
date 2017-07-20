@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,9 +51,6 @@ public class AcPaymentsController {
 
     /**
      * 获取用户总资产，总支出，总收入
-     *
-     * @param map
-     * @param acUser
      */
     private void getMoney(Map<String, Object> map, AcUser acUser) {
         AcPaymentsVo vo = new AcPaymentsVo();
@@ -78,11 +74,8 @@ public class AcPaymentsController {
 
     /**
      * 获取用户使用账本的天数
-     *
-     * @param map
-     * @param acUser
      */
-    public void getUseDays(Map<String, Object> map, AcUser acUser) {
+    private void getUseDays(Map<String, Object> map, AcUser acUser) {
         int days = acPaymentsService.selectAllDays(acUser.getId());
         map.put("days", days);
         map.put("name", acUser.getUsername());
@@ -144,11 +137,10 @@ public class AcPaymentsController {
 
     @RequestMapping(value = "selectByCondition", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> selectByCondition(AcPaymentsVo acPaymentsVo, HttpServletRequest request, HttpServletResponse response) {
+    public Map<String, Object> selectByCondition(AcPaymentsVo acPaymentsVo, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         AcUser acUser = CookieUtil.getLoginUser(request);
         List<AcPaymentsVo> list = new ArrayList<>();
-        ModelAndView modelAndView = new ModelAndView();
         if (null != acUser) {
             if (acPaymentsVo == null) {
                 acPaymentsVo = new AcPaymentsVo();
@@ -165,7 +157,7 @@ public class AcPaymentsController {
     public Map<String, Object> del(Integer id) {
         Map<String, Object> map = new HashMap<>();
         int flag;
-        String msg = "";
+        String msg;
         if (StringUtils.isEmpty(id)) {
             flag = GlobalConstant.NO_MESSAGE;
             msg = GlobalConstant.MSG_NO_MESSAGE;
@@ -204,10 +196,6 @@ public class AcPaymentsController {
 
     /**
      * 统计二级分类情况
-     *
-     * @param vo
-     * @param request
-     * @return
      */
     @RequestMapping(value = "getStats", method = RequestMethod.POST)
     public Map<String, Object> getStats(AcPaymentsVo vo, HttpServletRequest request) {
@@ -237,9 +225,6 @@ public class AcPaymentsController {
     @ResponseBody
     public void getYearInfo(@PathVariable int moneyType, HttpServletRequest request, HttpServletResponse response) throws IOException {
         AcUser acUser = CookieUtil.getLoginUser(request);
-        if (acUser != null) {
-
-        }
         AcPaymentsVo vo = new AcPaymentsVo();
         vo.setMoneyType(moneyType);
         vo.setUserid(acUser.getId());

@@ -17,15 +17,11 @@ public interface AcCategoryMapper {
 
     /**
      * 获得1级目录
-     *
-     * @return
      */
     List<AcCategory> selectByLevel(int level);
 
     /**
      * 获得下一级目录
-     *
-     * @return
      */
     List<AcCategory> selectChild(int parentId);
 
